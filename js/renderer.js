@@ -3,17 +3,17 @@ var fromAPI = window.testAPI.theAPI()
 var testPlayer
 
 const firstFunction = (someParams) => {
-    alert(fromAPI + someParams)
+    console.log(fromAPI + someParams)
 }
 
 const secondFunction = (someParams) => {
-    alert(`${someParams}: my job is ${testPlayer.jobName}`)
+    console.log(`${someParams}: my job is ${testPlayer.jobName}`)
 }
 
 document.getElementById("testButton").addEventListener("click", () => {
 
     if (!document.getElementById("nameInput").value) {
-        alert("where name")
+        console.log("where name")
         return
     }
     if (!testPlayer) {
@@ -35,18 +35,34 @@ document.getElementById("testButton").addEventListener("click", () => {
         document.getElementById("playerLuck").innerHTML = `Luk: ${testPlayer.playerLuck}`
 
         document.getElementById("nameInput").disabled = true
-        document.getElementById("jobSelect").disabled = true
+        document.getElementById("jobInput").disabled = true
         document.getElementById("testButton").disabled = true
 
         firstFunction(testPlayer.playerName)
         secondFunction(testPlayer.playerName)
+        var weapon = Weapon.generateRandomItem()
+        testPlayer.playerWeapon = weapon
+        document.getElementById("testweapon").innerHTML = `weapon: ${weapon.itemName}`
+
     }
     else {
-        alert("Character is already created")
+        console.log("Character is already created")
     }
 
 
     //secondFunction(tempVar)
+})
+
+document.getElementById("testAttack").addEventListener("click", () => {
+    if (testPlayer) {
+        if (!testPlayer.playerWeapon) {
+            console.log("Player has no weapon")
+        }
+        else {
+            testPlayer.performAttack(testPlayer)
+        }
+
+    }
 })
 
 
