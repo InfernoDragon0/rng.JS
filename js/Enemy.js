@@ -1,16 +1,17 @@
+//TODO build Entity.js from the similarities of Enemy and Player
+
 class Enemy {
     constructor(name, job = "none", level = 1) {
         this.name = name
-        this.health = 100
-        this.mana = 100
+        this.health = 25
+        this.mana = 25
         this.job = job
         this.strength = 0
         this.dexterity = 0
         this.luck = 0
         this.level = level
-        this.statPoints = 0
 
-        this.equippedWeapon = null
+        this.equippedWeapon = Weapon.generateRandomItem()
         this.inventory = null
     }
 
@@ -32,17 +33,67 @@ class Enemy {
     get equippedWeapon() { return this.equippedWeapon }
     set equippedWeapon(weapon) { this.equippedWeapon = weapon }
 
+    modifyHealth(modification) { 
+        if (this.health - modification < 0) {
+            this.health = 0
+        }
+        else if (this.health - modification > this.maxHealth) {
+            this.health = this.maxHealth 
+        }
+        else {
+            this.health -= modification
+        }
+    }
+
     performAttack() {
-        var weaponAttack = this.equippedWeapon.rollAttack()
+        //enemy performs attack of 5% to 100% of its weapon based on level, max at lvl 20
+        var weaponAttack = this.equippedWeapon.rollAttack() * this.level/20
         var potions = null
+    }
 
+    takeDamage = (damage) => { 
+        var evade = Math.floor(Math.random() * 100)
 
+        if (evade < this.luck) { 
+            console.log("Damage Evaded")
+        }
+        else { 
+            console.log(`${damage} Damage taken`)
+            this.modifyHealth(damage)
+
+            if (this.health == 0) {
+                console.log(`${this.name} has Died`)
+            }
+        }
+    }
+
+    generateLoot = () => {
+        this.inventory = new Inventory()
+        
+        //generate gold
+        this.inventory.gold = Math.floor(Math.random() * 10 * this.level)
+
+        //generate potions, up to 5 per mob
+        var totalPotions = Math.min(Math.floor(Math.random() * 2 * this.level), 5)
+
+        for (var i = 0; i < totalPotions; i++) {
+            var potion = Potion.generateRandomItem()
+            this.inventory.addToInventory(potion)
+        }
+
+        //chance from 5 to 100 based on level (100% chance at lvl 20)
+        var dropsWeapon = Math.floor(Math.random() * 100)
+
+        //drops the enemy's equipped weapon
+        if (dropsWeapon < 5 * this.level) {
+            this.inventory.addToInventory(this.equippedWeapon)
+        }
     }
 
     generateStats = () => {
-        this.strength = (Math.floor(Math.random() * 11) + 1)
-        this.dexterity = (Math.floor(Math.random() * 11) + 1)
-        this.luck = (Math.floor(Math.random() * 11) + 1)
+        this.strength = (Math.floor(Math.random() * this.level) + 5)
+        this.dexterity = (Math.floor(Math.random() * this.level) + 5)
+        this.luck = (Math.floor(Math.random() * this.level) + 5)
 
         switch (this.job) {
             case "Phantom":

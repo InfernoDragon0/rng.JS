@@ -1,5 +1,5 @@
 class Player {
-    constructor(name, job = "none") {
+    constructor(name, job = "none", inventory) {
         this.name = name
         this.maxHealth = 100
         this.health = 100
@@ -10,10 +10,11 @@ class Player {
         this.dexterity = 0
         this.luck = 0
         this.level = 1
+        this.experience = 0
         this.statPoints = 0
 
         this.equippedWeapon = null
-        this.inventory = null
+        this.inventory = inventory ? inventory : new Inventory()
     }
 
     get playerName() { return this.name }

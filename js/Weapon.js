@@ -15,11 +15,11 @@ class Weapon extends Item {
         return `${super.itemName} [${this.attackMin} - ${this.attackMax}]`
     }
 
-    static generateRandomItem = () => {
+    static generateRandomItem = (rarity = -1) => {
         var weaponTypes = ["Sword", "Wand", "Dagger", "Carts"]
         var modifiers = ["Heavy", "Light", "Double", "(Un)Balanced"]
 
-        var rarity = Item.randomRarity()
+        var rarity = rarity >= 0 ? rarity : Item.randomRarity()
         var weaponType = weaponTypes[Math.floor(Math.random() * (weaponTypes.length - 1))]
         var modifier = modifiers[Math.floor(Math.random() * (modifiers.length - 1))]
         var min = Math.floor(Math.random() * 10) + (rarity * 5)
