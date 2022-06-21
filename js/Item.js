@@ -1,8 +1,7 @@
 class Item {
-    constructor(name = "Placeholder", type = "Item", quantity = 1, rarity = 0) {
+    constructor(name = "Placeholder", type = "Item", rarity = 0) {
         this.name = name
         this.type = type
-        this.quantity = quantity
         this.rarity = rarity
 
         this.raritys = ["Common", "Uncommon", "Rare", "Epic", "Mythic"]
@@ -14,9 +13,6 @@ class Item {
     set itemName(name) { this.name = name }
 
     get itemType() { return this.type }
-
-    get itemQuantity() { return this.quantity }
-    set itemQuantity(quantity) { this.quantity = quantity }
 
     static generateRandomItem = () => {
         console.log("plain item cannot be generated")

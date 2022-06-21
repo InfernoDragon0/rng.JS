@@ -1,0 +1,37 @@
+{
+  "name": "tree",
+  "maxHealth": 102,
+  "health": 102,
+  "maxMana": 109.5,
+  "mana": 109.5,
+  "job": "Phantom",
+  "strength": 1,
+  "dexterity": 2,
+  "luck": 17,
+  "level": 1,
+  "experience": 0,
+  "statPoints": 0,
+  "equippedWeapon": {
+    "name": "Heavy Sword",
+    "type": "Weapon",
+    "rarity": 0,
+    "raritys": [
+      "Common",
+      "Uncommon",
+      "Rare",
+      "Epic",
+      "Mythic"
+    ],
+    "weaponType": "Sword",
+    "attackMin": 5,
+    "attackMax": 5,
+    "modifier": "Heavy"
+  },
+  "inventory": {
+    "slots": 10,
+    "gold": 0,
+    "potions": [],
+    "weapons": [],
+    "items": []
+  }
+}

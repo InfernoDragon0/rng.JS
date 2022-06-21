@@ -1,6 +1,6 @@
 class Weapon extends Item {
     constructor(name = "Placeholder", weaponType = "Weapon", attackMin = 0, attackMax = 1, modifier = "", rarity = 0) {
-        super(name, "Weapon", 1, rarity)
+        super(name, "Weapon", rarity)
         this.weaponType = weaponType
         this.attackMin = attackMin
         this.attackMax = attackMax
@@ -27,6 +27,22 @@ class Weapon extends Item {
     }
 
     rollAttack = () => {
-        return Math.floor(Math.random() * (this.attackMax - this.attackMin + 1)) + this.attackMin
+        var baseRoll = Math.floor(Math.random() * (this.attackMax - this.attackMin + 1)) + this.attackMin
+        switch (modifier) {
+            case "Heavy":
+                baseRoll *= 1.5
+                break
+            case "Light":
+                baseRoll *= 0.8
+                break
+            case "Double":
+                baseRoll += Math.floor(Math.random() * (this.attackMax - this.attackMin + 1)) + this.attackMin
+                break
+            case "Balanced":
+                break
+
+        }
+
+        return 
     }
 }

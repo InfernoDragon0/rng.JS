@@ -1,7 +1,7 @@
 class Inventory {
-    constructor() {
-        this.slots = 10
-        this.gold = 0
+    constructor(slots = 10, gold = 0) {
+        this.slots = slots
+        this.gold = gold
         this.potions = []
         this.weapons = []
         this.items = []
@@ -45,28 +45,50 @@ class Inventory {
 
     contains = (item) => {
         var itemType = item.itemType
-    }
-
-    getItemIndex = (item) => {
-        var itemType = item.itemType
-
-
-    }
-
-    useItem = (item, itemIndex, amount) => {
-        var itemType = item.itemType
 
         switch (itemType) {
             case "Weapon":
+                return this.weapons.includes(item)
+
+            case "Potion":
+                return this.potions.includes(item)
+
+            default:
+                return this.items.includes(item)
+        }
+    }
+
+    getItemIndex = (item, arr) => {
+        for (var i = 0; i < arr.length; i++) {
+            if (arr[i] == item) return i
+        }
+        return -1 //return -1 if nothing found
+    }
+
+    useItem = (item, itemIndex) => {
+        var itemType = item.itemType
+
+        if (this.contains(item) == -1) {
+            return //item doesn't exist lmao
+        }
+
+        switch (itemType) {
+            case "Weapon":
+                if (!itemIndex)
+                    itemIndex = getItemIndex(item, this.weapons)
                 this.weapons.splice(itemIndex, 1)
                 break
 
             case "Potion":
-                this.potions.pop(item)
+                if (!itemIndex)
+                    itemIndex = getItemIndex(item, this.potions)
+                this.potions.splice(item)
                 break
 
             default:
-                this.items.pop(item)
+                if (!itemIndex)
+                    itemIndex = getItemIndex(item, this.items)
+                this.items.splice(item)
                 break
         }
     }

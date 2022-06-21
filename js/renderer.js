@@ -1,14 +1,6 @@
-var fromAPI = window.testAPI.theAPI()
+var saveCharacterData = window.testAPI.saveCharacterData
 
 var testPlayer
-
-const firstFunction = (someParams) => {
-    console.log(fromAPI + someParams)
-}
-
-const secondFunction = (someParams) => {
-    console.log(`${someParams}: my job is ${testPlayer.jobName}`)
-}
 
 document.getElementById("testButton").addEventListener("click", () => {
 
@@ -33,13 +25,11 @@ document.getElementById("testButton").addEventListener("click", () => {
     document.getElementById("playerDexterity").innerHTML = `Dex: ${testPlayer.entityDexterity}`
     document.getElementById("playerLuck").innerHTML = `Luk: ${testPlayer.entityLuck}`
 
-    firstFunction(testPlayer.entityName)
-    secondFunction(testPlayer.entityName)
     var weapon = Weapon.generateRandomItem(0)
     testPlayer.entityWeapon = weapon
     document.getElementById("testweapon").innerHTML = `weapon: ${weapon.itemName}`
+    saveCharacterData(testPlayer.entityName, testPlayer)
 
-    //secondFunction(tempVar)
 })
 
 document.getElementById("testAttack").addEventListener("click", () => {

@@ -1,4 +1,5 @@
 const { contextBridge } = require('electron')
+const fs = require('fs')
 
 window.addEventListener('DOMContentLoaded', () => {
     const replaceText = (selector, text) => {
@@ -12,5 +13,11 @@ window.addEventListener('DOMContentLoaded', () => {
   })
 
 contextBridge.exposeInMainWorld("testAPI", {
-    'theAPI': () => { return "hello "}
+    'saveCharacterData': (playerName, playerData) => { 
+      var file = fs.writeFile(`saves/${playerName}.json`, JSON.stringify(playerData, null, 2), {flag: "wx"}, (err) => {
+        if (err) {
+          console.log("error writing to file: " + err)
+        }
+      })
+    }
 })

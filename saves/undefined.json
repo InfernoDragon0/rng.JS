@@ -1,0 +1,37 @@
+{
+  "name": "tree",
+  "maxHealth": 108,
+  "health": 108,
+  "maxMana": 108,
+  "mana": 108,
+  "job": "Phantom",
+  "strength": 4,
+  "dexterity": 2,
+  "luck": 14,
+  "level": 1,
+  "experience": 0,
+  "statPoints": 0,
+  "equippedWeapon": {
+    "name": "Light Wand",
+    "type": "Weapon",
+    "rarity": 0,
+    "raritys": [
+      "Common",
+      "Uncommon",
+      "Rare",
+      "Epic",
+      "Mythic"
+    ],
+    "weaponType": "Wand",
+    "attackMin": 3,
+    "attackMax": 3,
+    "modifier": "Light"
+  },
+  "inventory": {
+    "slots": 10,
+    "gold": 0,
+    "potions": [],
+    "weapons": [],
+    "items": []
+  }
+}

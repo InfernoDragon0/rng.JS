@@ -1,7 +1,7 @@
 class Potion extends Item {
 
-    constructor(name = "Placeholder", quantity = 1, size = "", potionType = "") {
-        super(name, "Potion", quantity)
+    constructor(name = "Placeholder", size = "", potionType = "") {
+        super(name, "Potion")
         this.size = size
         this.potionType = potionType
     }
