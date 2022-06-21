@@ -16,46 +16,35 @@ document.getElementById("testButton").addEventListener("click", () => {
         console.log("where name")
         return
     }
-    if (!testPlayer) {
-        job = document.getElementById("jobInput").value
-        pname = document.getElementById("nameInput").value
+    job = document.getElementById("jobInput").value
+    pname = document.getElementById("nameInput").value
 
-        if (job.length == 0)
-            testPlayer = new Player(pname)
-        else
-            testPlayer = new Player(pname, job)
+    if (job.length == 0)
+        testPlayer = new Player(pname)
+    else
+        testPlayer = new Player(pname, job)
 
-        testPlayer.generateStats()
+    testPlayer.generateStats()
 
-        document.getElementById("playerName").innerHTML = `Name: ${testPlayer.playerName}`
-        document.getElementById("jobName").innerHTML = `Job: ${testPlayer.jobName}`
+    document.getElementById("playerName").innerHTML = `Name: ${testPlayer.entityName}`
+    document.getElementById("jobName").innerHTML = `Job: ${testPlayer.jobName}`
 
-        document.getElementById("playerStrength").innerHTML = `Str: ${testPlayer.playerStrength}`
-        document.getElementById("playerDexterity").innerHTML = `Dex: ${testPlayer.playerDexterity}`
-        document.getElementById("playerLuck").innerHTML = `Luk: ${testPlayer.playerLuck}`
+    document.getElementById("playerStrength").innerHTML = `Str: ${testPlayer.entityStrength}`
+    document.getElementById("playerDexterity").innerHTML = `Dex: ${testPlayer.entityDexterity}`
+    document.getElementById("playerLuck").innerHTML = `Luk: ${testPlayer.entityLuck}`
 
-        document.getElementById("nameInput").disabled = true
-        document.getElementById("jobInput").disabled = true
-        document.getElementById("testButton").disabled = true
-
-        firstFunction(testPlayer.playerName)
-        secondFunction(testPlayer.playerName)
-        var weapon = Weapon.generateRandomItem()
-        testPlayer.playerWeapon = weapon
-        document.getElementById("testweapon").innerHTML = `weapon: ${weapon.itemName}`
-
-    }
-    else {
-        console.log("Character is already created")
-    }
-
+    firstFunction(testPlayer.entityName)
+    secondFunction(testPlayer.entityName)
+    var weapon = Weapon.generateRandomItem(0)
+    testPlayer.entityWeapon = weapon
+    document.getElementById("testweapon").innerHTML = `weapon: ${weapon.itemName}`
 
     //secondFunction(tempVar)
 })
 
 document.getElementById("testAttack").addEventListener("click", () => {
     if (testPlayer) {
-        if (!testPlayer.playerWeapon) {
+        if (!testPlayer.entityWeapon) {
             console.log("Player has no weapon")
         }
         else {

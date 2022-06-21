@@ -10,7 +10,7 @@ const createWindow = () => {
       }
     })
   
-    win.loadFile('index.html')
+    win.loadFile('html/mainMenu.html')
   }
 
   app.whenReady().then(() => {

@@ -1,72 +1,19 @@
-class Player {
+class Player extends Entity {
     constructor(name, job = "none", inventory) {
-        this.name = name
+        super(name, job, inventory)
         this.maxHealth = 100
         this.health = 100
         this.maxMana = 100
         this.mana = 100
-        this.job = job
-        this.strength = 0
-        this.dexterity = 0
-        this.luck = 0
-        this.level = 1
-        this.experience = 0
-        this.statPoints = 0
-
-        this.equippedWeapon = null
-        this.inventory = inventory ? inventory : new Inventory()
     }
 
-    get playerName() { return this.name }
-    set playerName(name) { this.name = name }
-
-    get jobName() { return this.job }
-    set jobName(jobname) { this.job = jobname }
-
-    get playerStrength() { return this.strength }
-    set playerStrength(strength) { this.strength = strength }
-
-    get playerDexterity() { return this.dexterity }
-    set playerDexterity(dexterity) { this.dexterity = dexterity }
-
-    get playerLuck() { return this.luck }
-    set playerLuck(luck) { this.luck = luck }
-
-    get playerWeapon() { return this.equippedWeapon }
-    set playerWeapon(weapon) { this.equippedWeapon = weapon }
-
     modifyHealth(modification) { 
-        if (this.health - modification < 0) {
-            this.health = 0
-        }
-        else if (this.health - modification > this.maxHealth) {
-            this.health = this.maxHealth 
-        }
-        else {
-            this.health -= modification
-        }
-        
+        super.modifyHealth(modification)
         document.getElementById("playerHealth").innerHTML = `Current Health: ${this.health}/${this.maxHealth}`
     }
 
-    takeDamage = (damage) => { 
-        var evade = Math.floor(Math.random() * 100)
-
-        if (evade < this.luck) { 
-            console.log("Damage Evaded")
-        }
-        else { 
-            console.log(`${damage} Damage taken`)
-            this.modifyHealth(damage)
-
-            if (this.health == 0) {
-                console.log(`${this.name} has Died`)
-            }
-        }
-    }
-
     performAttack = (target) => {
-        var weaponAttack = this.playerWeapon.rollAttack()
+        var weaponAttack = this.entityWeapon.rollAttack()
         var potions = 0
         var stats = 0
 
@@ -87,7 +34,6 @@ class Player {
         }
 
         target.takeDamage(weaponAttack + potions + stats)
-        
     }
 
     levelUp = () => {
@@ -99,26 +45,47 @@ class Player {
     }
 
     generateStats = () => {
-        this.strength = (Math.floor(Math.random() * 11) + 1)
-        this.dexterity = (Math.floor(Math.random() * 11) + 1)
-        this.luck = (Math.floor(Math.random() * 11) + 1)
+        var totalStatDistribution = 15
 
         switch (this.job) {
-            case "Phantom":
-                this.strength = this.strength * .5
-                this.dexterity = this.dexterity * .5
-                this.luck = this.luck * .5
+            case "Phantom": //luck bias
+                this.luck = (Math.floor(Math.random() * totalStatDistribution))
+                totalStatDistribution -= this.luck
+                
+                this.dexterity = (Math.floor(Math.random() * totalStatDistribution))
+                totalStatDistribution -= this.dexterity
+
+                this.strength = (Math.floor(Math.random() * totalStatDistribution))
+                totalStatDistribution -= this.strength
+
+                this.luck += totalStatDistribution + 3
+                this.dexterity += 1
+                this.strength += 1
                 break
-            case "Blaster":
-                this.strength = -1
+            case "Warrior": //strength bias
+                this.strength = (Math.floor(Math.random() * totalStatDistribution))
+                totalStatDistribution -= this.strength
+
+                this.dexterity = (Math.floor(Math.random() * totalStatDistribution))
+                totalStatDistribution -= this.dexterity
+
+                this.luck = (Math.floor(Math.random() * totalStatDistribution))
+                totalStatDistribution -= this.luck
+
+                this.strength += totalStatDistribution + 5
                 break
-            case "Warrior":
-                this.strength += (this.strength - 1)
+            case "Mage": //luck + dex bias, highest max stat for dex/luck but can have negative str
+                this.dexterity = (Math.floor(Math.random() * totalStatDistribution))
+                this.luck = (Math.floor(Math.random() * totalStatDistribution))
+                totalStatDistribution -= (this.dexterity + this.luck)
+
+                this.strength = (Math.floor(Math.random() * totalStatDistribution))
+                totalStatDistribution -= this.strength
+
+                this.dexterity += totalStatDistribution + 2
+                this.luck += totalStatDistribution + 2
                 break
-            case "Mage":
-                this.luck += (this.luck + 8)
-                break
-            case "Assassin":
+            case "Assassin": //dex bias
                 this.dexterity += (this.dexterity + 7)
                 break
             default:

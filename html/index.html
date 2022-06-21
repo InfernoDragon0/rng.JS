@@ -7,24 +7,22 @@
     <title>rng.JS Game</title>
   </head>
   <body>
-    <h1>rng.JS Game</h1>
-    We are using Node.js <span id="node-version"></span>,
-    Chromium <span id="chrome-version"></span>,
-    and Electron <span id="electron-version"></span>.
+    <h1>Create New Character</h1>
+    <p>Create and re-roll your character here!</p>
 
     <br>
     <input type="text" id="nameInput"/>
     <select name="Job" id="jobInput">
-      <option value="Phantom">Phantom(Warrior, Mage and Assassin)</option>
+      <option value="Phantom">Phantom</option>
       <option value="Warrior">Warrior</option>
       <option value="Mage">Mage</option>
       <option value="Assassin">Assassin</option>
     </select>
-    <button id="testButton">Create Character</button>
+    <button id="testButton">Roll Character</button>
     <br>
 
     <br>
-    <p>Your character details are:</p>
+    <p>Your Roll:</p>
     <p id="playerName"></p>
     <p id="jobName"></p>
     <p id="playerHealth"></p>
@@ -36,13 +34,13 @@
     <p id="testweapon"></p>
 
     <button id="testAttack">Test Attack</button>
-    <textarea id="logs"></textarea>
-    
-
+    <button id="createCharacter">Create Character</button>
   </body>
 
-  <script src="./js/Item.js"></script>
-  <script src="./js/Weapon.js"></script>
-  <script src="./js/Player.js"></script>
-  <script src="./js/renderer.js"></script>
+  <script src="../js/Item.js"></script>
+  <script src="../js/Inventory.js"></script>
+  <script src="../js/Weapon.js"></script>
+  <script src="../js/Entity.js"></script>
+  <script src="../js/Player.js"></script>
+  <script src="../js/renderer.js"></script>
 </html>

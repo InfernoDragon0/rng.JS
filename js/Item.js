@@ -40,6 +40,8 @@ class Item {
         else if (weight < 100) {
             return 4
         }
-        return 0
+        else {
+            return 0
+        }
     }
 }
