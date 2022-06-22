@@ -1,4 +1,6 @@
 var saveCharacterData = window.testAPI.saveCharacterData
+var test = window.testAPI.checkTest
+var updateTest = window.testAPI.updateTest
 
 var testPlayer
 
@@ -40,6 +42,9 @@ document.getElementById("testAttack").addEventListener("click", () => {
         else {
             testPlayer.performAttack(testPlayer)
         }
+
+        console.log("updated test is " + test())
+
 
     }
 })

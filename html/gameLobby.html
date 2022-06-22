@@ -1,0 +1,31 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="UTF-8">
+    <!-- https://developer.mozilla.org/en-US/docs/Web/HTTP/CSP -->
+    <meta http-equiv="Content-Security-Policy" content="default-src 'self'; script-src 'self'">
+    <title>rng.JS Game</title>
+  </head>
+  <body>
+    <h1>Game Lobby</h1>
+    <p>Check your stats here and go on an adventure!</p>
+
+    <p id="playerName">Your Character:</p>
+    <p id="playerHealth"></p>
+    <p id="playerMana"></p>
+    
+    <p id="playerStrength"></p>
+    <p id="playerDexterity"></p>
+    <p id="playerLuck"></p>
+    <p id="equippedWeapon"></p>
+
+    <button id="testAttack">Test Attack</button>
+  </body>
+
+  <script src="../js/Item.js"></script>
+  <script src="../js/Inventory.js"></script>
+  <script src="../js/Weapon.js"></script>
+  <script src="../js/Entity.js"></script>
+  <script src="../js/Player.js"></script>
+  <script src="../js/lobby.js"></script>
+</html>

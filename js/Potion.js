@@ -6,6 +6,10 @@ class Potion extends Item {
         this.potionType = potionType
     }
 
+    static fromJSON(data) {
+        return Object.assign(new Potion(), data)
+    }
+
     static generateRandomItem = () => {
         var potionTypes = ["Healing", "Damaging", "Burning", "Freezing", "Acid", "Poison"]
         var sizes = ["Large", "Medium", "Small", "Sample"]

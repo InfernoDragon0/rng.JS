@@ -29,7 +29,7 @@
   },
   "inventory": {
     "slots": 10,
-    "gold": 0,
+    "gold": 55,
     "potions": [],
     "weapons": [],
     "items": []

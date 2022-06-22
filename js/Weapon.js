@@ -11,6 +11,10 @@ class Weapon extends Item {
         return `${super.itemName} [${this.attackMin} - ${this.attackMax}]`
     }
 
+    static fromJSON(data) {
+        return Object.assign(new Weapon(), data)
+    }
+
     static generateRandomItem = (rarity = -1) => {
         var weaponTypes = ["Sword", "Wand", "Dagger", "Carts"]
         var modifiers = ["Heavy", "Light", "Double", "Balanced"]
@@ -28,7 +32,7 @@ class Weapon extends Item {
 
     rollAttack = () => {
         var baseRoll = Math.floor(Math.random() * (this.attackMax - this.attackMin + 1)) + this.attackMin
-        switch (modifier) {
+        switch (this.modifier) {
             case "Heavy":
                 baseRoll *= 1.5
                 break

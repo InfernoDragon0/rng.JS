@@ -1,10 +1,14 @@
 class Player extends Entity {
-    constructor(name, job = "none", inventory) {
+    constructor(name = "player", job = "none", inventory = null) {
         super(name, job, inventory)
         this.maxHealth = 100
         this.health = 100
         this.maxMana = 100
         this.mana = 100
+    }
+
+    static fromJSON(data) {
+        return Object.assign(new Player(), data)
     }
 
     modifyHealth(modification) { 
@@ -86,7 +90,16 @@ class Player extends Entity {
                 this.luck += totalStatDistribution + 2
                 break
             case "Assassin": //dex bias
-                this.dexterity += (this.dexterity + 7)
+                this.dexterity = (Math.floor(Math.random() * totalStatDistribution))
+                totalStatDistribution -= this.dexterity
+            
+                this.strength = (Math.floor(Math.random() * totalStatDistribution))
+                totalStatDistribution -= this.strength
+
+                this.luck = (Math.floor(Math.random() * totalStatDistribution))
+                totalStatDistribution -= this.luck
+
+                this.dexterity += totalStatDistribution + 5
                 break
             default:
                 break

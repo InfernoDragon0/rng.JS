@@ -14,6 +14,10 @@ class Item {
 
     get itemType() { return this.type }
 
+    static fromJSON(data) {
+        return Object.assign(new Item(), data)
+    }
+
     static generateRandomItem = () => {
         console.log("plain item cannot be generated")
     }

@@ -7,6 +7,10 @@ class Inventory {
         this.items = []
     }
 
+    static fromJSON(data) {
+        return Object.assign(new Inventory(), data)
+    }
+
     addToInventory = (item) => {
         var itemType = item.itemType
 
@@ -21,24 +25,6 @@ class Inventory {
 
             default:
                 this.items.push(item)
-                break
-        }
-    }
-
-    removeFromInventory = (item) => {
-        var itemType = item.itemType
-
-        switch (itemType) {
-            case "Weapon":
-                this.weapons.pop(item)
-                break
-
-            case "Potion":
-                this.potions.pop(item)
-                break
-
-            default:
-                this.items.pop(item)
                 break
         }
     }
@@ -76,20 +62,17 @@ class Inventory {
             case "Weapon":
                 if (!itemIndex)
                     itemIndex = getItemIndex(item, this.weapons)
-                this.weapons.splice(itemIndex, 1)
-                break
+                return this.weapons.splice(itemIndex, 1)
 
             case "Potion":
                 if (!itemIndex)
                     itemIndex = getItemIndex(item, this.potions)
-                this.potions.splice(item)
-                break
+                return this.potions.splice(item)
 
             default:
                 if (!itemIndex)
                     itemIndex = getItemIndex(item, this.items)
-                this.items.splice(item)
-                break
+                return this.items.splice(item)
         }
     }
 }
