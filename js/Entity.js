@@ -32,28 +32,31 @@ class Entity {
     get entityLuck() { return this.luck }
     set entityLuck(luck) { this.luck = luck }
 
+    get entityLevel() { return this.level }
+    set entityLevel(level) { this.level = level }
+
     get entityWeapon() { return this.equippedWeapon }
     set entityWeapon(weapon) { this.equippedWeapon = weapon }
 
-    modifyHealth(modification) { 
+    modifyHealth(modification) {
         if (this.health - modification < 0) {
             this.health = 0
         }
         else if (this.health - modification > this.maxHealth) {
-            this.health = this.maxHealth 
+            this.health = this.maxHealth
         }
         else {
             this.health -= modification
         }
     }
 
-    takeDamage = (damage) => { 
+    takeDamage = (damage) => {
         var evade = Math.floor(Math.random() * 100)
 
-        if (evade < this.luck) { 
+        if (evade < this.luck) {
             console.log("Damage Evaded")
         }
-        else { 
+        else {
             console.log(`${damage} Damage taken`)
             this.modifyHealth(damage)
 

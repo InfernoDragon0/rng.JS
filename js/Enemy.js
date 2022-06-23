@@ -1,6 +1,6 @@
 class Enemy extends Entity {
-    constructor(name, job = "none", level = 1) {
-        this.name = name
+    constructor(name = "Enemy", job = "none", inventory = null, level = 1) {
+        super(name, job, inventory)
         this.health = 25
         this.mana = 25
         this.job = job
@@ -67,7 +67,9 @@ class Enemy extends Entity {
         }
 
         this.health += this.strength * 2
+        this.maxHealth = this.health
         this.mana += (this.dexterity + this.luck) / 2
+        this.maxMana = this.mana
 
     }
 }

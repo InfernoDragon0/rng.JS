@@ -47,6 +47,6 @@ class Weapon extends Item {
 
         }
 
-        return 
+        return baseRoll
     }
 }

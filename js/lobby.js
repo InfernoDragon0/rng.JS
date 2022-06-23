@@ -1,6 +1,7 @@
 var readCharacter = window.testAPI.readCharacter
 
 var player = new Player()
+var enemies = []
 
 window.onload = () => {
     readCharacter().then((data) => {
@@ -8,7 +9,7 @@ window.onload = () => {
         var inventory = Inventory.fromJSON(data.inventory)
         player = Player.fromJSON(data)
         player.inventory = inventory
-        player.equippedWeapon = weapon
+        player.entityWeapon = weapon
         showCharacterDetails()
     })
 }
@@ -23,3 +24,16 @@ showCharacterDetails = () => {
     document.getElementById("playerLuck").innerHTML = `Luk: ${player.entityLuck}`
     document.getElementById("equippedWeapon").innerHTML = `Equipped Weapon: ${player.equippedWeapon.itemName}`
 }
+
+document.getElementById("start").addEventListener("click", () => {
+    window.location.href = "./gameFight.html"
+})
+
+document.getElementById("testAttack").addEventListener("click", () => {
+    var testEnemy = new Enemy()
+
+    testEnemy.generateStats()
+
+    testEnemy.maxHealth = 25
+    console.log(testEnemy)
+})
