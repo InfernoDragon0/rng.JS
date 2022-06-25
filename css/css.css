@@ -1,0 +1,61 @@
+.card {
+    background: rgba(0, 0, 0, 0.5);
+    border-radius: 24px;
+    height: 180px;
+    width: max-content;
+    padding: 16px;
+    margin: 16px;
+}
+
+.enemyCard {
+    float: left;
+    height: 120px;
+}
+
+.characterDetails {
+    font-size: 16px;
+    color: white;
+    text-align: left;
+    margin-top: 12px;
+    margin-bottom: 12px;
+    margin-left: 8px;
+    margin-right: 8px;
+}
+
+.characterHeader {
+    font-size: 24px;
+}
+
+.characterLeft {
+    float: left;
+    width: 80%;
+}
+
+.characterRight {
+    float: right;
+    width: 20%;
+}
+
+.enemyCharacterLeft {
+    float: left;
+    width: 50%;
+}
+
+.enemyCharacterRight {
+    float: right;
+    width: 50%;
+}
+
+.playerCards {
+    float:center;
+    width: 100%;
+}
+
+.enemyCards {
+    align-items: center;
+}
+
+.buttons{
+    float:left;
+    width: 100%;
+}

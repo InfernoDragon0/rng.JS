@@ -1,33 +1,50 @@
 <!DOCTYPE html>
 <html>
-  <head>
-    <meta charset="UTF-8">
-    <!-- https://developer.mozilla.org/en-US/docs/Web/HTTP/CSP -->
-    <meta http-equiv="Content-Security-Policy" content="default-src 'self'; script-src 'self'">
-    <title>rng.JS Game</title>
-  </head>
-  <body>
-    <h1>Game Fight</h1>
 
-    <p id="playerName">Your Character:</p>
-    <p id="playerHealth"></p>
-    <p id="playerMana"></p>
-    
-    <p id="playerStrength"></p>
-    <p id="playerDexterity"></p>
-    <p id="playerLuck"></p>
-    <p id="equippedWeapon"></p>
+<head>
+  <meta charset="UTF-8">
+  <!-- https://developer.mozilla.org/en-US/docs/Web/HTTP/CSP -->
+  <meta http-equiv="Content-Security-Policy" content="default-src 'self'; script-src 'self'">
+  <title>rng.JS Game</title>
+  <link rel="stylesheet" type="text/css" href="../css/css.css">
+</head>
 
+<body>
+  <h1>Game Fight</h1>
+
+  <div class="card">
+    <p id="playerName" class="characterHeader characterDetails">Your Character:</p>
+    <div class="characterLeft">
+      <p id="playerHealth" class="characterDetails">test</p>
+      <p id="playerMana" class="characterDetails">test</p>
+      <p id="equippedWeapon" class="characterDetails">test</p>
+    </div>
+
+    <div class="characterRight">
+      <p id="playerStrength" class="characterDetails">test</p>
+      <p id="playerDexterity" class="characterDetails">test</p>
+      <p id="playerLuck" class="characterDetails">test</p>
+    </div>
+  </div>
+  <br>
+  <h2>VS</h2>
+  <br>
+
+  <div class="enemyCards" id="enemyCards">
+  </div>
+
+  <div class="buttons">
     <button id="start">Start Adventuring!</button>
-
     <button id="testAttack">Test Attack</button>
-  </body>
+  </div>
+</body>
 
-  <script src="../js/Item.js"></script>
-  <script src="../js/Inventory.js"></script>
-  <script src="../js/Weapon.js"></script>
-  <script src="../js/Entity.js"></script>
-  <script src="../js/Player.js"></script>
-  <script src="../js/Enemy.js"></script>
-  <script src="../js/fight.js"></script>
+<script src="../js/Item.js"></script>
+<script src="../js/Inventory.js"></script>
+<script src="../js/Weapon.js"></script>
+<script src="../js/Entity.js"></script>
+<script src="../js/Player.js"></script>
+<script src="../js/Enemy.js"></script>
+<script src="../js/fight.js"></script>
+
 </html>
