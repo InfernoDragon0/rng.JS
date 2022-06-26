@@ -35,11 +35,13 @@ class Enemy extends Entity {
 
         //chance from 5 to 100 based on level (100% chance at lvl 20)
         var dropsWeapon = Math.floor(Math.random() * 100)
-
         //drops the enemy's equipped weapon
         if (dropsWeapon < 5 * this.level) {
             this.inventory.addToInventory(this.equippedWeapon)
         }
+
+        //experience as loot
+        this.experience = Math.floor(Math.random() * 20 * this.level)
     }
 
     generateStats = () => {
@@ -49,6 +51,7 @@ class Enemy extends Entity {
         }
 
         var totalStatDistribution = 10
+        this.name = `Level ${this.level} Enemy ${this.job}`
 
         switch (this.job) {
             case "Phantom": //luck bias
@@ -105,9 +108,9 @@ class Enemy extends Entity {
         }
 
         this.health += this.strength
-        this.maxHealth += this.strength
+        this.maxHealth = this.health
         this.mana += (this.dexterity+this.luck)/4
-        this.maxMana += (this.dexterity+this.luck)/4
+        this.maxMana = this.mana
 
     }
 }

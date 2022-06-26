@@ -7,6 +7,10 @@
     margin: 16px;
 }
 
+.deadCard {
+    background: rgba(100, 0, 0, 0.5);
+}
+
 .enemyCard {
     float: left;
     height: 120px;

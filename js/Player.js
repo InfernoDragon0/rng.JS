@@ -105,9 +105,9 @@ class Player extends Entity {
         }
 
         this.health += this.strength*2
-        this.maxHealth += this.strength*2
+        this.maxHealth = this.health
         this.mana += (this.dexterity+this.luck)/2
-        this.maxMana += (this.dexterity+this.luck)/2
+        this.maxMana = mana
 
     }
 }

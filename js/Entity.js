@@ -57,10 +57,9 @@ class Entity {
             console.log("Damage Evaded")
         }
         else {
-            console.log(`${damage} Damage taken`)
             this.modifyHealth(damage)
 
-            if (this.health == 0) {
+            if (this.health <= 0) {
                 console.log(`${this.name} has Died`)
             }
         }
