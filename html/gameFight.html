@@ -12,7 +12,7 @@
 <body>
   <h1>Game Fight</h1>
 
-  <div class="card">
+  <div id="playerCard" class="card">
     <p id="playerName" class="characterHeader characterDetails">Your Character:</p>
     <div class="characterLeft">
       <p id="playerHealth" class="characterDetails">test</p>
@@ -34,9 +34,13 @@
   </div>
 
   <div class="buttons">
-    <button id="start">Start Adventuring!</button>
-    <button id="testAttack">Test Attack</button>
+    <button id="collect">Collect Loot!</button>
     <button id="runaway">Run away</button>
+    <button id="testModal">Test</button>
+  </div>
+
+  <div id="lootModal" class="modal">
+    <div id="lootCards" class="enemyCards"> </div>
   </div>
 </body>
 

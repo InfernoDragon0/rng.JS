@@ -15,8 +15,8 @@ window.addEventListener('DOMContentLoaded', () => {
   })
 
 contextBridge.exposeInMainWorld("testAPI", {
-    'saveCharacterData': (playerName, playerData) => { 
-      var file = fs.writeFile(`saves/${playerName}.json`, JSON.stringify(playerData, null, 2), {flag: "wx"}, (err) => {
+    'saveCharacterData': (playerName, playerData, overwrite = "wx") => { 
+      var file = fs.writeFile(`saves/${playerName}.json`, JSON.stringify(playerData, null, 2), {flag: overwrite}, (err) => {
         if (err) {
           console.log("error writing to file: " + err)
         }

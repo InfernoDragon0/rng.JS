@@ -1,4 +1,5 @@
 var readCharacter = window.testAPI.readCharacter
+var saveCharacterData = window.testAPI.saveCharacterData
 
 var player
 var enemies = []
@@ -18,6 +19,7 @@ window.onload = () => {
         player.entityWeapon = weapon
         showCharacterDetails()
         loadEnemy()
+        startTurn()
     })
 }
 
@@ -66,8 +68,6 @@ loadEnemy = () => {
         eCard.className = "enemyCard card"
         eCard.id = `enemyCard${enemyInitiative}`
 
-        console.log(initiative[enemyInitiative])
-
         eCard.onclick = ((enemyInitiative) => { return () => { attackButton(initiative[enemyInitiative]) } })(enemyInitiative)
 
         var enemyNameCard = document.createElement("p")
@@ -107,9 +107,11 @@ loadEnemy = () => {
 
         enemyCards.appendChild(eCard)
     }
+
+    console.log(initiative)
 }
 
-document.getElementById("start").addEventListener("click", () => {
+document.getElementById("collect").addEventListener("click", () => {
 
 })
 
@@ -127,16 +129,15 @@ document.getElementById("runaway").addEventListener("click", () => {
         else {
             //lose the turn
             console.log("leg broke, cant run away")
+            startTurn()
         }
     }
 })
 
-document.getElementById("testAttack").addEventListener("click", () => { startTurn() })
-
 attackButton = (i) => {
     if (currentTurn != playerTurn) {
         console.log("not your turn")
-        //return
+        return
     }
 
     if (i.health <= 0 || gameEnded) {
@@ -145,19 +146,27 @@ attackButton = (i) => {
     else {
         player.performAttack(i)
         updateUI()
-        //use the turn
+        startTurn()
     }
+    
     
 }
 
 updateUI = () => {
-    console.log("Update UI")
+    //console.log("Update UI")
     var enemyCount = Object.keys(initiative).length -1
     Object.keys(initiative).forEach((key) => {
         
         if (initiative[key] instanceof Enemy) {
             document.getElementById(`enemyHealth${key}`).innerHTML = `Health: ${initiative[key].health}`
             document.getElementById(`enemyMana${key}`).innerHTML = `Mana: ${initiative[key].mana}`
+
+            if (key == currentTurn) {
+                document.getElementById(`enemyCard${key}`).className = "turnCard enemyCard card"
+            }
+            else {
+                document.getElementById(`enemyCard${key}`).className = "enemyCard card"
+            }
 
             if (initiative[key].health <= 0) {
                 //enemy turns into loot
@@ -168,8 +177,16 @@ updateUI = () => {
             }
         }
         else {
-            document.getElementById(`playerHealth`).innerHTML = `Health: ${initiative[key].health}`
-            document.getElementById(`playerMana`).innerHTML = `Mana: ${initiative[key].mana}`
+            if (key == currentTurn) {
+                document.getElementById(`playerCard`).className = "turnCard card"
+            }
+            else {
+                document.getElementById(`playerCard`).className = "card"
+            }
+            //rigged stuff
+
+            document.getElementById(`playerHealth`).innerHTML = `Health: ${player.health.toFixed(2)}`
+            document.getElementById(`playerMana`).innerHTML = `Mana: ${player.mana}`
         }
     })
 
@@ -193,12 +210,24 @@ endGame = () => {
             }
         })
     }
+
+    //save the current character data back to json and also into the server side variable
+    saveData()
 }
 
-startTurn = () => {
-    //on each turn,
-    var turnTaker
+saveData = () => {
+    saveCharacterData(player.entityName, player, "w")
+}
 
+
+delay = (time) => {
+    return new Promise(resolve => setTimeout(resolve, time));
+}
+
+startTurn = async () => {
+    //on each turn,
+    updateUI()
+    var turnTaker
     //find next turn
     var i = maxInitiative
     if (currentTurn == maxInitiative) currentTurn = 0
@@ -206,7 +235,7 @@ startTurn = () => {
         if (key > currentTurn && key < i) i = key
     })
 
-    console.log(`initiate ${i}`)
+    //console.log(`initiate ${i}`)
     currentTurn = i
 
     // if (!initiative.hasOwnProperty[currentTurn]) {
@@ -216,23 +245,66 @@ startTurn = () => {
     turnTaker = initiative[currentTurn]
 
     if (turnTaker instanceof Enemy) {
+        if (turnTaker.health <= 0) {
+            startTurn()
+            return
+        }
         console.log("Enemy turn now, enemy is " + turnTaker.entityName)
-        //disable buttons for player if it is not his turn - might not be necessary?
-
 
         //enemy attacks the player > find a way to sleep
         turnTaker.performAttack(player)
 
-        //enemies can take a 1 second sleep for each action
 
         //then update the UI
         updateUI()
 
+        //enemies can take a 1 second sleep for each action
+        await delay(500)
+
         //then start next turn
-        //startTurn()
+        startTurn()
     }
     else {
         //enable buttons for player if it is his turn
         console.log("player's turn now")
+        updateUI()
     }
 }
+
+document.getElementById("testModal").addEventListener("click", () => {
+    //generate new cards
+    var lootInventory = new Inventory()
+    var experience = 0
+
+    Object.keys(initiative).forEach((key) => {
+        if(initiative[key] instanceof Enemy) {
+            var loot = initiative[key].inventory
+            loot.items.forEach((item) => {
+                lootInventory.addToInventory(item)
+            })
+            loot.potions.forEach((item) => {
+                lootInventory.addToInventory(item)
+            })
+            loot.weapons.forEach((item) => {
+                lootInventory.addToInventory(item)
+            })
+            lootInventory.gold += loot.gold
+            experience += initiative[key].experience
+        }
+        
+    })
+
+    console.log(lootInventory)
+    
+
+
+
+    //document.getElementById("lootModal").style.display = "block"
+
+
+    
+    // if (!gameEnded) {
+    //     console.log("Game has not ended yet! no loot for you")
+    //     return
+    // }
+})

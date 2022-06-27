@@ -1,7 +1,7 @@
 {
   "name": "Tree",
   "maxHealth": 102,
-  "health": 102,
+  "health": 67.84500000000003,
   "maxMana": 109.5,
   "mana": 109.5,
   "job": "Phantom",
@@ -24,7 +24,7 @@
     ],
     "weaponType": "Sword",
     "attackMin": 5,
-    "attackMax": 5,
+    "attackMax": 99,
     "modifier": "Heavy"
   },
   "inventory": {

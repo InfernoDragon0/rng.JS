@@ -14,13 +14,13 @@ class Potion extends Item {
         var potionTypes = ["Healing", "Damaging", "Burning", "Freezing", "Acid", "Poison"]
         var sizes = ["Large", "Medium", "Small", "Sample"]
 
-        var potionType = potionTypes[Math.random() * (potionTypes.length - 1)]
-        var size = sizes[Math.random() * (sizes.length - 1)]
+        var potionType = potionTypes[Math.floor(Math.random() * (potionTypes.length))]
+        var size = sizes[Math.floor(Math.random() * (sizes.length))]
         var rarity = Item.randomRarity()
 
         var wname = `${size} Potion of ${potionType}`
 
-        return new Potion(wname, 1, size, potionType, rarity)
+        return new Potion(wname, size, potionType, rarity)
     }
 
     useOn = (target) => {
