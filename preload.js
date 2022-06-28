@@ -20,6 +20,9 @@ contextBridge.exposeInMainWorld("testAPI", {
         if (err) {
           console.log("error writing to file: " + err)
         }
+        else { //RACE CONDITIONS
+          ipcRenderer.send('loadCharacter', `${playerName}.json`)
+        }
       })
     },
     'loadCharacter': (character) => { 

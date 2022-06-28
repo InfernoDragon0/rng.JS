@@ -15,6 +15,10 @@
     background: rgba(138, 146, 69, 0.5);
 }
 
+.chosenLootCard {
+    background: rgba(0, 150, 0, 0.5);
+}
+
 .enemyCard {
     float: left;
     height: 120px;
@@ -78,4 +82,45 @@
     height: 100%;
     overflow: auto;
     background-color: rgb(255, 255, 255,1);
+}
+
+.items {
+    --grid-layout-gap: 10px;
+    --grid-column-count: 10;
+    --grid-item--min-width: 72px;
+    --gap-count: calc(var(--grid-column-count) - 1);
+    --total-gap-width: calc(var(--gap-count) * var(--grid-layout-gap));
+    --grid-item--max-width: calc((100% - var(--total-gap-width)) / var(--grid-column-count));
+
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(max(var(--grid-item--min-width), var(--grid-item--max-width)), 72px));
+    grid-gap: var(--grid-layout-gap);
+
+}
+
+.item {
+    width: 64px;
+    height: 64px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background-color: rgb(255, 255, 255);
+    box-shadow: 0px 0px 5px 1px rgba(0,0,0,0.64);
+    margin: 5px;
+}
+
+.uncommon {
+    background-color: rgb(165, 214, 167);
+}
+
+.rare {
+    background-color: rgb(130, 177, 255);
+}
+
+.epic {
+    background-color: rgb(179, 136, 255);
+}
+
+.mythic {
+    background-color: rgb(132, 255, 255);
 }

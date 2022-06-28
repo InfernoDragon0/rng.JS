@@ -7,6 +7,8 @@ class Weapon extends Item {
         this.modifier = modifier
     }
 
+    get itemNameClean() { return super.itemName }
+
     get itemName() {
         return `${super.itemName} [${this.attackMin} - ${this.attackMax}]`
     }

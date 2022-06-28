@@ -28,7 +28,7 @@ app.whenReady().then(() => {
       }
       else {
         selectedCharacter = JSON.parse(data)
-        win.loadFile("html/gameLobby.html")
+        //win.loadFile("html/gameLobby.html")
       }
 
     })

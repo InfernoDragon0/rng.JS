@@ -7,6 +7,7 @@
   <meta http-equiv="Content-Security-Policy" content="default-src 'self'; script-src 'self'">
   <title>rng.JS Game</title>
   <link rel="stylesheet" type="text/css" href="../css/css.css">
+  <link rel="stylesheet" href="../css/rpg-awesome.min.css">
 </head>
 
 <body>
@@ -40,7 +41,14 @@
   </div>
 
   <div id="lootModal" class="modal">
+    <p id="itemSlot"></p>
+    <p id="potionSlot"></p>
+    <p id="weaponSlot"></p>
     <div id="lootCards" class="enemyCards"> </div>
+
+    <div class="buttons">
+      <button id="confirmLoot">Confirm Loot Selection</button>
+    </div>
   </div>
 </body>
 

@@ -4,19 +4,37 @@
     <meta charset="UTF-8">
     <!-- https://developer.mozilla.org/en-US/docs/Web/HTTP/CSP -->
     <meta http-equiv="Content-Security-Policy" content="default-src 'self'; script-src 'self'">
+    <link rel="stylesheet" href="../css/css.css">
+    <link rel="stylesheet" href="../css/rpg-awesome.min.css">
     <title>rng.JS Game</title>
   </head>
   <body>
-    <h1>Game Lobby</h1>
+    <h1>Player Inventory</h1>
     <p>Check your stats here and go on an adventure!</p>
 
     <p id="playerName">Your Inventory:</p>
     <p id="playerSlots"></p>
-    <p id="playerItems"></p>
-    <p id="playerPotions"></p>
-    <p id="playerWeapons"></p>
     <p id="playerGold"></p>
     <p id="equippedWeapon"></p>
+    <div class="items" id="equipped">
+
+    </div>
+
+    <p id="playerItems">Items:</p>
+    <div class="items" id="items">
+
+
+    </div>
+
+    <p id="playerPotions">Potions:</p>
+    <div class="items" id="potions">
+    </div>
+
+    <p id="playerWeapons">Weapons:</p>
+    <div class="items" id="weapons">
+
+    </div>
+
 
     <button id="shop">Shop</button>
     <button id="lobby">Lobby</button>
@@ -25,6 +43,7 @@
   <script src="../js/Item.js"></script>
   <script src="../js/Inventory.js"></script>
   <script src="../js/Weapon.js"></script>
+  <script src="../js/Potion.js"></script>
   <script src="../js/Entity.js"></script>
   <script src="../js/Player.js"></script>
   <script src="../js/Enemy.js"></script>

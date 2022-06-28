@@ -8,6 +8,9 @@ var currentTurn = 0
 var maxInitiative = 0
 var playerTurn = 0
 var gameEnded = false
+var collectedLoot = []
+var chosenLoot = []
+var experience = 0
 
 
 window.onload = () => {
@@ -35,7 +38,7 @@ showCharacterDetails = () => {
 
 loadEnemy = () => {
     var enemyCount = Math.floor((Math.random() * 4) + 1) // max 5
-    
+
 
     playerTurn = Math.floor(Math.random() * (100 - player.entityDexterity))
     if (playerTurn == 0)
@@ -148,15 +151,15 @@ attackButton = (i) => {
         updateUI()
         startTurn()
     }
-    
-    
+
+
 }
 
 updateUI = () => {
     //console.log("Update UI")
-    var enemyCount = Object.keys(initiative).length -1
+    var enemyCount = Object.keys(initiative).length - 1
     Object.keys(initiative).forEach((key) => {
-        
+
         if (initiative[key] instanceof Enemy) {
             document.getElementById(`enemyHealth${key}`).innerHTML = `Health: ${initiative[key].health}`
             document.getElementById(`enemyMana${key}`).innerHTML = `Mana: ${initiative[key].mana}`
@@ -272,17 +275,22 @@ startTurn = async () => {
 }
 
 document.getElementById("testModal").addEventListener("click", () => {
-    
+
     if (!gameEnded) {
         console.log("Game has not ended yet! no loot for you")
         return
     }
     //generate new cards
     var lootInventory = new Inventory()
-    var experience = 0
+
+    console.log("map items to inventory")
+
+    document.getElementById("itemSlot").innerText = `Item Slots Available: ${player.inventory.slots - player.inventory.items.length}/${player.inventory.slots}`
+    document.getElementById("potionSlot").innerText = `Potion Slots Available: ${player.inventory.slots - player.inventory.potions.length}/${player.inventory.slots}`
+    document.getElementById("weaponSlot").innerText = `Weapon Slots Available: ${player.inventory.slots - player.inventory.weapons.length}/${player.inventory.slots}`
 
     Object.keys(initiative).forEach((key) => {
-        if(initiative[key] instanceof Enemy) {
+        if (initiative[key] instanceof Enemy) {
             var loot = initiative[key].inventory
             loot.items.forEach((item) => {
                 lootInventory.addToInventory(item)
@@ -296,10 +304,104 @@ document.getElementById("testModal").addEventListener("click", () => {
             lootInventory.gold += loot.gold
             experience += initiative[key].experience
         }
-        
+
     })
 
+    lootInventory.addToInventory(Weapon.generateRandomItem()) // debug only
+
     console.log(lootInventory)
-    
-    //document.getElementById("lootModal").style.display = "block"
+
+    var itemCard = document.getElementById("lootCards")
+
+    lootInventory.inventoryItems.map((item, index) => {
+        var lootCard = document.createElement("div")
+        lootCard.className = "enemyCard card"
+        lootCard.id = `itemCard${index}`
+
+        lootCard.addEventListener("click", () => {
+            lootItem(index)
+        })
+
+        if (item instanceof Weapon) {
+            console.log("item is weapon")
+            console.log(item)
+            var lootImage = document.createElement("div")
+            lootImage.className = "ra ra-sword ra-2x"
+
+            var lootHeader = document.createElement("p")
+            lootHeader.className = "characterHeader, characterDetails"
+            lootHeader.innerHTML = item.itemNameClean
+
+            var lootLeftCard = document.createElement("div")
+            lootLeftCard.className = "enemyCharacterLeft"
+
+            var lootMinAtt = document.createElement("p")
+            lootMinAtt.className = "characterDetails"
+            lootMinAtt.innerHTML = `Minimum Att: ${item.attackMin}`
+
+            lootLeftCard.appendChild(lootMinAtt)
+
+            var lootRightCard = document.createElement("div")
+            lootRightCard.className = "enemyCharacterRight"
+
+            var lootMaxAtt = document.createElement("p")
+            lootMaxAtt.className = "characterDetails"
+            lootMaxAtt.innerHTML = `Maximum Att: ${item.attackMax}`
+
+            lootRightCard.appendChild(lootMaxAtt)
+
+            lootCard.appendChild(lootImage)
+            lootCard.appendChild(lootHeader)
+            lootCard.appendChild(lootLeftCard)
+            lootCard.appendChild(lootRightCard)
+        }
+        else { // other item or pot
+            console.log("item is pot")
+            console.log(item)
+            var lootImage = document.createElement("div")
+            lootImage.className = "ra ra-sword ra-2x"
+
+            var lootHeader = document.createElement("p")
+            lootHeader.className = "characterHeader, characterDetails"
+            lootHeader.innerHTML = item.itemName
+
+            lootCard.appendChild(lootImage)
+            lootCard.appendChild(lootHeader)
+        }
+        console.log(lootCard)
+
+        itemCard.appendChild(lootCard)
+        collectedLoot.push(item)
+        chosenLoot.push(false)
+        console.log("item appended to modal")
+    })
+
+    document.getElementById("lootModal").style.display = "block"
+})
+
+lootItem = (item) => {
+    chosenLoot[item] = !chosenLoot[item] //inverter
+    if (chosenLoot[item]) document.getElementById(`itemCard${item}`).className = `chosenLootCard enemyCard card`
+    else document.getElementById(`itemCard${item}`).className = `enemyCard card`
+
+    // document.getElementById(`itemCard${index}`).className = `${chosenLoot[item] ? "selectedLootCard " : ""}enemyCard card`
+}
+
+document.getElementById("confirmLoot").addEventListener("click", () => {
+    var count = 0
+    collectedLoot.map((item, index) => {
+        if (chosenLoot[index]) {
+            console.log(`adding item to inventory ${chosenLoot[index]}`)
+            console.log(item)
+            player.inventory.addToInventory(item)
+            count += 1
+        }
+    })
+
+    if (count == 0) {
+        // confirm that they dun wan loot
+        console.log("no loot?")
+    }
+    player.inventory.gold += collectedLoot.gold
+    player.experience += experience
 })

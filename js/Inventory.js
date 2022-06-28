@@ -7,6 +7,9 @@ class Inventory {
         this.items = []
     }
 
+    get inventoryItems() {return this.items.concat(this.weapons, this.potions)}
+    set inventoryItems(items) { this.items = items}
+
     static fromJSON(data) {
         return Object.assign(new Inventory(), data)
     }

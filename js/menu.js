@@ -29,5 +29,6 @@ document.getElementById("continueButton").addEventListener("click", () => {
     }
     else {
         loadCharacter(selected)
+        window.location.href = "./gameLobby.html"
     }
 })
