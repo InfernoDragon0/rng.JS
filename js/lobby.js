@@ -29,11 +29,20 @@ document.getElementById("start").addEventListener("click", () => {
     window.location.href = "./gameFight.html"
 })
 
+document.getElementById("inventory").addEventListener("click", () => {
+    window.location.href = "./gameInventory.html"
+})
+
 document.getElementById("testAttack").addEventListener("click", () => {
     var testEnemy = new Enemy()
 
     testEnemy.generateStats()
 
-    testEnemy.maxHealth = 25
-    console.log(testEnemy)
+    testEnemy.maxHealth = 100
+    testEnemy.health = 100
+
+    console.log(`Before Attack: ${testEnemy.health}`)
+    player.performAttack(testEnemy)
+    console.log(`After Attack: ${testEnemy.health}`)
+
 })
