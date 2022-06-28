@@ -272,6 +272,11 @@ startTurn = async () => {
 }
 
 document.getElementById("testModal").addEventListener("click", () => {
+    
+    if (!gameEnded) {
+        console.log("Game has not ended yet! no loot for you")
+        return
+    }
     //generate new cards
     var lootInventory = new Inventory()
     var experience = 0
@@ -296,15 +301,5 @@ document.getElementById("testModal").addEventListener("click", () => {
 
     console.log(lootInventory)
     
-
-
-
     //document.getElementById("lootModal").style.display = "block"
-
-
-    
-    // if (!gameEnded) {
-    //     console.log("Game has not ended yet! no loot for you")
-    //     return
-    // }
 })

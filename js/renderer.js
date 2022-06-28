@@ -30,8 +30,17 @@ document.getElementById("testButton").addEventListener("click", () => {
     var weapon = Weapon.generateRandomItem(0)
     testPlayer.entityWeapon = weapon
     document.getElementById("testweapon").innerHTML = `weapon: ${weapon.itemName}`
-    saveCharacterData(testPlayer.entityName, testPlayer)
+})
 
+document.getElementById("createCharacter").addEventListener("click", () => {
+    if (testPlayer) {
+        saveCharacterData(testPlayer.entityName, testPlayer)
+        window.location.href = "./mainMenu.html"
+    }
+    else {
+        console.log("no character")
+    }
+    
 })
 
 document.getElementById("testAttack").addEventListener("click", () => {
