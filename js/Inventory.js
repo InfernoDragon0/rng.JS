@@ -1,5 +1,5 @@
 class Inventory {
-    constructor(slots = 10, gold = 0) {
+    constructor(slots = 30, gold = 0) {
         this.slots = slots
         this.gold = gold
         this.potions = []
@@ -10,11 +10,18 @@ class Inventory {
     get inventoryItems() {return this.items.concat(this.weapons, this.potions)}
     set inventoryItems(items) { this.items = items}
 
+    get itemCount() {return this.items.length + this.weapons.length + this.potions.length}
+    get slotsLeft() { return this.slots - this.itemCount}
+
     static fromJSON(data) {
         return Object.assign(new Inventory(), data)
     }
 
-    addToInventory = (item) => {
+    addToInventory = (item, bypass = false) => {
+        if(!bypass && this.slots == this.itemCount){
+            return `No slot left. Inventory slots: ${this.slotsLeft}`
+        }
+
         var itemType = item.itemType
 
         switch (itemType) {

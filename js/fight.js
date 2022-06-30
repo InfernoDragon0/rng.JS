@@ -11,6 +11,8 @@ var gameEnded = false
 var collectedLoot = []
 var chosenLoot = []
 var experience = 0
+var gold = 0
+var toggleLoot = false
 
 
 window.onload = () => {
@@ -193,7 +195,7 @@ updateUI = () => {
         }
     })
 
-    if (enemyCount == 0) {
+    if (enemyCount == 0 && !gameEnded) {
         endGame()
     }
 }
@@ -274,7 +276,7 @@ startTurn = async () => {
     }
 }
 
-document.getElementById("testModal").addEventListener("click", () => {
+document.getElementById("collect").addEventListener("click", () => {
 
     if (!gameEnded) {
         console.log("Game has not ended yet! no loot for you")
@@ -282,12 +284,11 @@ document.getElementById("testModal").addEventListener("click", () => {
     }
     //generate new cards
     var lootInventory = new Inventory()
+    lootInventory.slots = 999
 
     console.log("map items to inventory")
 
-    document.getElementById("itemSlot").innerText = `Item Slots Available: ${player.inventory.slots - player.inventory.items.length}/${player.inventory.slots}`
-    document.getElementById("potionSlot").innerText = `Potion Slots Available: ${player.inventory.slots - player.inventory.potions.length}/${player.inventory.slots}`
-    document.getElementById("weaponSlot").innerText = `Weapon Slots Available: ${player.inventory.slots - player.inventory.weapons.length}/${player.inventory.slots}`
+    document.getElementById("itemSlot").innerText = `Item Slots Available: ${player.inventory.slotsLeft}/${player.inventory.slots}`
 
     Object.keys(initiative).forEach((key) => {
         if (initiative[key] instanceof Enemy) {
@@ -301,7 +302,7 @@ document.getElementById("testModal").addEventListener("click", () => {
             loot.weapons.forEach((item) => {
                 lootInventory.addToInventory(item)
             })
-            lootInventory.gold += loot.gold
+            gold += loot.gold
             experience += initiative[key].experience
         }
 
@@ -376,7 +377,19 @@ document.getElementById("testModal").addEventListener("click", () => {
         console.log("item appended to modal")
     })
 
+    document.getElementById("lootGold").innerHTML = `Gold: ${gold}`
+    document.getElementById("lootExp").innerHTML = `Exp: ${experience}`
+
     document.getElementById("lootModal").style.display = "block"
+})
+
+document.getElementById("selectAll").addEventListener("click", () => {
+    toggleLoot = !toggleLoot
+    chosenLoot.map((item, index) => {
+        chosenLoot[index] = toggleLoot
+        document.getElementById(`itemCard${index}`).className = `enemyCard card` + (toggleLoot ? " chosenLootCard" : "")
+    })
+    document.getElementById("selectAll").innerHTML = toggleLoot ? "Deselect All" : "Select All"
 })
 
 lootItem = (item) => {
@@ -388,20 +401,27 @@ lootItem = (item) => {
 }
 
 document.getElementById("confirmLoot").addEventListener("click", () => {
-    var count = 0
+    var lootCount = 0
+    chosenLoot.map((item) => {
+        if (item) { lootCount += 1 }
+    })
+
+    if (lootCount > player.inventory.slotsLeft) {
+        console.log(`Too many items, inventory: ${player.inventory.itemCount}/${player.inventory.slots}`)
+        return
+    }
+
     collectedLoot.map((item, index) => {
         if (chosenLoot[index]) {
             console.log(`adding item to inventory ${chosenLoot[index]}`)
             console.log(item)
             player.inventory.addToInventory(item)
-            count += 1
         }
     })
 
-    if (count == 0) {
-        // confirm that they dun wan loot
-        console.log("no loot?")
-    }
-    player.inventory.gold += collectedLoot.gold
+    player.inventory.gold += Math.floor(gold)
     player.experience += experience
+
+    saveData()
+    window.location.href = "./gameLobby.html"
 })

@@ -29,7 +29,7 @@ saveData = () => {
 }
 
 showCharacterDetails = () => {
-    document.getElementById("playerSlots").innerHTML = `Slots: ${player.inventory.slots}`
+    document.getElementById("playerSlots").innerHTML = `Slots: ${player.inventory.slotsLeft}/${player.inventory.slots}`
     document.getElementById("playerItems").innerHTML = `Items: ${player.inventory.items.length}`
     document.getElementById("playerPotions").innerHTML = `Potions: ${player.inventory.potions.length}`
 
