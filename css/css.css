@@ -109,6 +109,10 @@
     margin: 5px;
 }
 
+.item.selected {
+    border: 1px solid lime;
+}
+
 .uncommon {
     background-color: rgb(165, 214, 167);
 }

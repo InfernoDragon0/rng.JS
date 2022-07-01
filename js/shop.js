@@ -34,6 +34,15 @@ showCharacterDetails = () => {
 
 }
 
+addShopItems = () => {
+    var shopItemDiv = document.getElementById("items")
+    //inventory add 1, 3, 5 slots, max slots is 200 slots
+
+    //lootbox for common / uncommon / rare weapon
+
+    //lootbox for common / uncommon / rare potion
+}
+
 document.getElementById("lobby").addEventListener("click", () => {
     window.location.href = "./gameLobby.html"
 })
