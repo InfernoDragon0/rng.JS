@@ -29,6 +29,11 @@ document.getElementById("start").addEventListener("click", () => {
     window.location.href = "./gameFight.html"
 })
 
+document.getElementById("shop").addEventListener("click", () => {
+    window.location.href = "./gameShop.html"
+})
+
+
 document.getElementById("inventory").addEventListener("click", () => {
     window.location.href = "./gameInventory.html"
 })
