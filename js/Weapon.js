@@ -19,7 +19,7 @@ class Weapon extends Item {
 
     static generateRandomItem = (rarity = -1, level = 0) => {
         var weaponTypes = ["Sword", "Wand", "Dagger", "Carts"]
-        var modifiers = ["Heavy", "Light", "Double", "Balanced"]
+        var modifiers = ["Igniting", "Venomous", "Double", "Shocking", "Focused", "Balanced"]
 
         var rarity = rarity >= 0 ? rarity : Item.randomRarity()
         var weaponType = weaponTypes[Math.floor(Math.random() * (weaponTypes.length))]
@@ -32,19 +32,32 @@ class Weapon extends Item {
         return new Weapon(wname, weaponType, min, max, modifier, rarity)
     }
 
-    rollAttack = () => {
+    rollAttack = (target) => {
         var baseRoll = Math.floor(Math.random() * (this.attackMax - this.attackMin + 1)) + this.attackMin
         switch (this.modifier) {
-            case "Heavy":
-                baseRoll *= 1.5
+            case "Igniting": //low direct damage, ignites the next turn for double damage
+                target.applyDebuff("damage", 2, baseRoll * 2)
+                baseRoll *= 0.2
                 break
-            case "Light":
-                baseRoll *= 0.8
+            case "Venomous": //moderate direct damage, stackable poisonous damage
+                target.applyDebuff("damage", 8, baseRoll / 4)
+                baseRoll *= 0.6
                 break
-            case "Double":
+            case "Double": //rolls twice
                 baseRoll += Math.floor(Math.random() * (this.attackMax - this.attackMin + 1)) + this.attackMin
                 break
-            case "Balanced":
+            case "Shocking": 
+                if (target instanceof Enemy) {//the target you attack is stunned
+                    target.applyDebuff("stun", 2, 0)
+                    baseRoll *= 0.8
+                }
+                else { //players cannot be stunned
+                    baseRoll *= 1.2
+                }
+                break
+            case "Focused": //raw damage, then additionally 10% more damage as normal damage
+                target.modifyHealth(baseRoll)
+                baseRoll *= 0.1
                 break
 
         }

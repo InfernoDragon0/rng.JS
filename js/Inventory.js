@@ -70,21 +70,21 @@ class Inventory {
 
         switch (itemType) {
             case "Weapon":
-                if (!itemIndex)
-                    itemIndex = getItemIndex(item, this.weapons)
+                // if (!itemIndex)
+                //     itemIndex = getItemIndex(item, this.weapons)
                 return this.weapons.splice(itemIndex, 1)
 
             case "Potion":
-                if (!itemIndex)
-                    itemIndex = getItemIndex(item, this.potions)
+                // if (!itemIndex)
+                //     itemIndex = getItemIndex(item, this.potions)
                 if(target){
                     item.useOn(target)
                 }
                 return this.potions.splice(itemIndex, 1)
 
             default:
-                if (!itemIndex)
-                    itemIndex = getItemIndex(itemIndex, this.items)
+                // if (!itemIndex)
+                //     itemIndex = getItemIndex(itemIndex, this.items)
                 return this.items.splice(item, 1)
         }
     }
