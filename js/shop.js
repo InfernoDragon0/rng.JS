@@ -66,6 +66,7 @@ addShopItems = () => {
     var shopItemDiv = document.getElementById("items")
     //special items
     addSpecial(1100, 4, 1, "Weapon Enhancement", "weaponenhance", "ra-lightning-sword")
+    addSpecial(3300, 4, 1, "Weapon Modifier Reroll", "weaponmodifier", "ra-scroll-unfurled")
 
     //inventory add 1, 3, 5, 7 slots, max slots is 200 slots
     for (let i = 0; i < 8; i++) {

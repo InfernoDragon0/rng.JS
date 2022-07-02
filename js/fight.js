@@ -106,7 +106,7 @@ loadEnemy = () => {
 
         var enemyHealthCard = document.createElement("p")
         enemyHealthCard.className = "characterDetails"
-        enemyHealthCard.innerText = `Health: ${newEnemy.health}`
+        enemyHealthCard.innerText = `Health: ${newEnemy.health.toFixed(2)}`
         enemyHealthCard.id = `enemyHealth${enemyInitiative}`
 
         var enemyManaCard = document.createElement("p")
@@ -261,7 +261,7 @@ updateUI = () => {
     Object.keys(initiative).forEach((key) => {
 
         if (initiative[key] instanceof Enemy) {
-            document.getElementById(`enemyHealth${key}`).innerHTML = `Health: ${initiative[key].health}`
+            document.getElementById(`enemyHealth${key}`).innerHTML = `Health: ${initiative[key].health.toFixed(2)}`
             document.getElementById(`enemyMana${key}`).innerHTML = `Mana: ${initiative[key].mana}`
 
             if (key == currentTurn) {

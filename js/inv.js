@@ -61,7 +61,8 @@ showCharacterDetails = () => {
         var item = document.createElement("i")
         item.className = "ra ra-2x " + (itemz.itemType == "weaponlootbox" ? "ra-perspective-dice-random" :
                                         itemz.itemType == "potionlootbox" ? "ra-crystals" : 
-                                        itemz.itemType == "weaponenhance" ? "ra-lightning-sword" : "")
+                                        itemz.itemType == "weaponenhance" ? "ra-lightning-sword" :
+                                        itemz.itemType == "weaponmodifier" ? "ra-scroll-unfurled" : "")
 
         itemDiv.appendChild(item)
         itemDiv.addEventListener("click", (e) => {
@@ -91,8 +92,17 @@ showCharacterDetails = () => {
                 if (player.inventory.items.indexOf(itemz) != -1 && player.equippedWeapon) {
                     player.inventory.items.splice(player.inventory.items.indexOf(itemz), 1)
                     console.log("enhance weapon " + itemz.rarity)
-                    player.equippedWeapon.attackMin += 10
-                    player.equippedWeapon.attackMax += 10
+                    player.equippedWeapon.attackMin += 6
+                    player.equippedWeapon.attackMax += 12
+                    saveData()
+                    window.location.reload()
+                }
+            }
+            else if (itemz.itemType == "weaponmodifier") {
+                if (player.inventory.items.indexOf(itemz) != -1 && player.equippedWeapon) {
+                    player.inventory.items.splice(player.inventory.items.indexOf(itemz), 1)
+                    console.log("modifier weapon " + itemz.rarity)
+                    player.equippedWeapon.rollModifier()
                     saveData()
                     window.location.reload()
                 }

@@ -10,7 +10,7 @@ class Weapon extends Item {
     get itemNameClean() { return super.itemName }
 
     get itemName() {
-        return `${super.itemName} [${this.attackMin} - ${this.attackMax}]`
+        return `${super.itemName} (${this.modifier}) [${this.attackMin} - ${this.attackMax}]`
     }
 
     static fromJSON(data) {
@@ -27,9 +27,18 @@ class Weapon extends Item {
         var min = Math.floor(Math.random() * 10) + (rarity * 5) + (Math.floor(Math.random() * 3 * level))
         var max = min + Math.floor(Math.random() * 10) + (rarity * 5)
 
-        var wname = `${modifier} ${weaponType}`
+        var wname = `${weaponType}`
 
         return new Weapon(wname, weaponType, min, max, modifier, rarity)
+    }
+
+    rollModifier = () => {
+        var modifiers = ["Igniting", "Venomous", "Double", "Shocking", "Focused", "Balanced"]
+        if (modifiers.indexOf(this.modifier) != -1)
+            modifiers.splice(modifiers.indexOf(this.modifier),1)
+        
+            var modifier = modifiers[Math.floor(Math.random() * (modifiers.length))]
+        this.modifier = modifier
     }
 
     rollAttack = (target) => {
@@ -48,7 +57,10 @@ class Weapon extends Item {
                 break
             case "Shocking": 
                 if (target instanceof Enemy) {//the target you attack is stunned
-                    target.applyDebuff("stun", 2, 0)
+                    let shockChance = Math.floor(Math.random() * 100) + (this.rarity * 20)
+                    if (shockChance > 60) {
+                        target.applyDebuff("stun", 2, 0)
+                    }
                     baseRoll *= 0.8
                 }
                 else { //players cannot be stunned
