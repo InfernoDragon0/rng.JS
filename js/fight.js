@@ -262,7 +262,12 @@ updateUI = () => {
 
         if (initiative[key] instanceof Enemy) {
             document.getElementById(`enemyHealth${key}`).innerHTML = `Health: ${initiative[key].health.toFixed(2)}`
-            document.getElementById(`enemyMana${key}`).innerHTML = `Mana: ${initiative[key].mana}`
+
+            let debuffData = "Debuff: "
+            for (debuff of initiative[key].debuffs) {
+                debuffData += `<br>${debuff.debuff}: ${debuff.duration} turns , ${debuff.power} dmg`
+            }
+            document.getElementById(`enemyMana${key}`).innerHTML = `${debuffData}`
 
             if (key == currentTurn) {
                 document.getElementById(`enemyCard${key}`).className = "turnCard enemyCard card"
