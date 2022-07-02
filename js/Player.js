@@ -17,7 +17,7 @@ class Player extends Entity {
     }
 
     performAttack = (target) => {
-        var weaponAttack = this.equippedWeapon.rollAttack()
+        var weaponAttack = this.equippedWeapon.rollAttack(target)
         var potions = 0
         var stats = 0
 

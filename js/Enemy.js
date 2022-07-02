@@ -13,7 +13,7 @@ class Enemy extends Entity {
         //enemy performs attack of 5% to 100% of its weapon based on level, max at lvl 20
         var modifier = 1
         if(this.level < 20) modifier = this.level / 20 // just in case level can exceed lvl 20
-        var weaponAttack = this.equippedWeapon.rollAttack() * modifier
+        var weaponAttack = this.equippedWeapon.rollAttack(target) * modifier
         var potions = null // future implementation?
 
         target.takeDamage(weaponAttack + potions)
