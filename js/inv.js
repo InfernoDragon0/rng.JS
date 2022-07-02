@@ -10,17 +10,30 @@ window.onload = () => {
         var weapon = Weapon.fromJSON(data.equippedWeapon)
         var inventory = Inventory.fromJSON(data.inventory)
         var weapons = []
+        var potions = []
+        var items = []
 
         player = Player.fromJSON(data)
         player.inventory = inventory
         player.entityWeapon = weapon
         
+        player.inventory.items.map((itemz) => {
+            var tempItem = Item.fromJSON(itemz)
+            items.push(tempItem)
+        })
+        player.inventory.items = items
 
         player.inventory.weapons.map((weaponz) => {
             var tempWeapon = Weapon.fromJSON(weaponz)
             weapons.push(tempWeapon)
         })
         player.inventory.weapons = weapons
+
+        player.inventory.potions.map((potionz) => {
+            var tempPotion = Potion.fromJSON(potionz)
+            potions.push(tempPotion)
+        })
+        player.inventory.potions = potions
 
         showCharacterDetails()
     })
@@ -34,7 +47,50 @@ saveData = () => {
 showCharacterDetails = () => {
     document.getElementById("playerSlots").innerHTML = `Slots: ${player.inventory.slotsLeft}/${player.inventory.slots}`
     document.getElementById("playerItems").innerHTML = `Items: ${player.inventory.items.length}`
-    document.getElementById("playerPotions").innerHTML = `Potions: ${player.inventory.potions.length}`
+
+    var itemsDiv = document.getElementById("items")
+    player.inventory.items.map((itemz, index) => {
+        var itemDiv = document.createElement("div")
+        itemDiv.className = "item " + (itemz.rarity == 0 ? "common" : 
+                                        itemz.rarity == 1 ? "uncommon" : 
+                                        itemz.rarity == 2 ? "rare" : 
+                                        itemz.rarity == 3 ? "epic" : 
+                                        itemz.rarity == 4 ? "mythic" : "")
+        itemDiv.id = `item${index}`
+        itemDiv.title = itemz.itemName
+        var item = document.createElement("i")
+        item.className = "ra ra-2x " + (itemz.itemType == "weaponlootbox" ? "ra-perspective-dice-random" :
+                                        itemz.itemType == "potionlootbox" ? "ra-crystals" : "")
+
+        itemDiv.appendChild(item)
+        itemDiv.addEventListener("click", (e) => {
+
+            if (itemz.itemType == "weaponlootbox") {
+                if (player.inventory.items.indexOf(itemz) != -1) {
+                    console.log("open box weapon rarity " + itemz.rarity)
+                    let newLoot = Weapon.generateRandomItem(itemz.rarity, itemz.rarity * 2 + 1)
+                    player.inventory.items.splice(player.inventory.items.indexOf(itemz), 1)
+                    player.inventory.addToInventory(newLoot)
+                    saveData()
+                    window.location.reload()
+                }
+                
+            }
+            else if (itemz.itemType == "potionlootbox") {
+                if (player.inventory.items.indexOf(itemz) != -1) {
+                    console.log("open box potion " + itemz.rarity)
+                    let newLoot = Potion.generateRandomItem(itemz.rarity, itemz.rarity * 2 + 1)
+                    player.inventory.items.splice(player.inventory.items.indexOf(itemz), 1)
+                    player.inventory.addToInventory(newLoot)
+                    saveData()
+                    window.location.reload()
+                }
+            }
+        })
+        itemsDiv.appendChild(itemDiv)
+    })
+
+    document.getElementById("playerPotions").innerHTML = `Buffs & Debuffs: ${player.inventory.potions.length}`
 
     var potionsDiv = document.getElementById("potions")
     player.inventory.potions.map((potion, index) => {
@@ -45,8 +101,15 @@ showCharacterDetails = () => {
                                 potion.rarity == 3 ? "epic" : 
                                 potion.rarity == 4 ? "mythic" : "")
         potionDiv.id = `potion${index}`
+        potionDiv.title = potion.itemName
         var item = document.createElement("i")
-        item.className = "ra ra-corked-tube ra-2x"
+        console.log(potion.potionType)
+        item.className = "ra ra-2x " + (potion.potionType == "Healing" ? "ra-health-increase" :
+                                        potion.potionType == "Damaging" ? "ra-spinning-sword" :
+                                        potion.potionType == "Burning" ? "ra-fire-symbol" :
+                                        potion.potionType == "Freezing" ? "ra-snowflake" :
+                                        potion.potionType == "Acid" ? "ra-biohazard" :
+                                        potion.potionType == "Poison" ? "ra-doubled" : "")
 
         potionDiv.appendChild(item)
         potionDiv.addEventListener("contextmenu", (e) => {
@@ -71,7 +134,10 @@ showCharacterDetails = () => {
         weaponDiv.title = weapon.itemName
         weaponDiv.id = `weapon${index}`
         var item = document.createElement("i")
-        item.className = "ra ra-sword ra-2x"
+        item.className = "ra ra-2x " + (weapon.weaponType == "Sword" ? "ra-sword" :
+                                        weapon.weaponType == "Wand" ? "ra-crystal-wand" :
+                                        weapon.weaponType == "Carts" ? "ra-spades-card" :
+                                        weapon.weaponType == "Dagger" ? "ra-daggers": "")
 
         weaponDiv.appendChild(item)
         weaponsDiv.appendChild(weaponDiv)
@@ -95,13 +161,16 @@ showCharacterDetails = () => {
     var equippedDiv = document.getElementById("equipped")
     var weaponDiv = document.createElement("div")
     weaponDiv.className = "item " + (player.entityWeapon.rarity == 0 ? "common" : 
-                            player.entityWeapon.rarity == 1 ? "uncommon" : 
-                            player.entityWeapon.rarity == 2 ? "rare" : 
-                            player.entityWeapon.rarity == 3 ? "epic" : 
-                            player.entityWeapon.rarity == 4 ? "mythic" : "")
+                                    player.entityWeapon.rarity == 1 ? "uncommon" : 
+                                    player.entityWeapon.rarity == 2 ? "rare" : 
+                                    player.entityWeapon.rarity == 3 ? "epic" : 
+                                    player.entityWeapon.rarity == 4 ? "mythic" : "")
     weaponDiv.title = player.entityWeapon.itemName
     var item = document.createElement("i")
-    item.className = "ra ra-sword ra-2x"
+    item.className = "ra ra-2x " + (player.entityWeapon.weaponType == "Sword" ? "ra-sword" :
+                                        player.entityWeapon.weaponType == "Wand" ? "ra-crystal-wand" :
+                                        player.entityWeapon.weaponType == "Carts" ? "ra-spades-card" :
+                                        player.entityWeapon.weaponType == "Dagger" ? "ra-daggers": "")
 
     weaponDiv.appendChild(item)
     equippedDiv.appendChild(weaponDiv)

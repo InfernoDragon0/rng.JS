@@ -17,14 +17,14 @@ class Weapon extends Item {
         return Object.assign(new Weapon(), data)
     }
 
-    static generateRandomItem = (rarity = -1) => {
+    static generateRandomItem = (rarity = -1, level = 0) => {
         var weaponTypes = ["Sword", "Wand", "Dagger", "Carts"]
         var modifiers = ["Heavy", "Light", "Double", "Balanced"]
 
         var rarity = rarity >= 0 ? rarity : Item.randomRarity()
         var weaponType = weaponTypes[Math.floor(Math.random() * (weaponTypes.length))]
         var modifier = modifiers[Math.floor(Math.random() * (modifiers.length))]
-        var min = Math.floor(Math.random() * 10) + (rarity * 5)
+        var min = Math.floor(Math.random() * 10) + (rarity * 5) + (Math.floor(Math.random() * 3 * level))
         var max = min + Math.floor(Math.random() * 10) + (rarity * 5)
 
         var wname = `${modifier} ${weaponType}`

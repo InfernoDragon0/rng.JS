@@ -8,7 +8,7 @@ class Item {
     }
 
     get itemName() { 
-        return `${this.raritys[this.rarity]} ${this.name} ${this.type}`
+        return `${this.raritys[this.rarity]} ${this.name}`
     }
     set itemName(name) { this.name = name }
 

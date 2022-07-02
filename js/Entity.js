@@ -12,6 +12,7 @@ class Entity {
         this.level = 1
         this.experience = 0
         this.statPoints = 0
+        this.debuffs = []
 
         this.equippedWeapon = null
         this.inventory = inventory ? inventory : new Inventory()
@@ -38,6 +39,15 @@ class Entity {
     get entityWeapon() { return this.equippedWeapon }
     set entityWeapon(weapon) { this.equippedWeapon = weapon }
 
+    get isStunned() { 
+        for (let debuff of this.debuffs) {
+            if (debuff["debuff"] == "stun") {
+                return true
+            }
+        }
+        return false
+    }
+
     modifyHealth(modification) {
         if (this.health - modification < 0) {
             this.health = 0
@@ -63,5 +73,43 @@ class Entity {
                 console.log(`${this.name} has Died`)
             }
         }
+    }
+
+    applyDebuff = (debuff, duration, power) => {
+        if (duration == 0) { //apply once
+
+        }
+        else { //if duration is -1, forever, same debuffs are stackable
+            this.debuffs.push({"duration": duration, "power": power, "debuff": debuff})
+        }
+    }
+
+    tickDebuffs = () => {
+        let clearables = []
+        //loop thru the debuffs, -1 duration and takedamage power etc
+        this.debuffs.map((debuff, i) => {
+            if (debuff.duration > 0 || debuff.duration == -1) {
+                switch (debuff["debuff"]) {
+                    case "damage":
+                        this.takeDamage(debuff.power)
+                        console.log(this.name + " taken " + debuff.power + " damage from debuff")
+                        break
+                }
+                if (debuff.duration > 0)
+                    debuff.duration--
+                
+                if (debuff.duration == 0) {
+                    clearables.push(debuff)
+                }
+            }
+        })
+        for (let clearable of clearables) {
+            if (this.debuffs.indexOf(clearable) != -1) {
+                this.debuffs.splice(this.debuffs.indexOf(clearable), 1)
+                console.log(this.name + " removed " + clearable.debuff + " debuff")
+            }
+        }
+        
+        
     }
 }

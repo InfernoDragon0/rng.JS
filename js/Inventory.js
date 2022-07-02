@@ -61,7 +61,7 @@ class Inventory {
         return -1 //return -1 if nothing found
     }
 
-    useItem = (item, itemIndex) => {
+    useItem = (item, itemIndex, target) => {
         var itemType = item.itemType
 
         if (this.contains(item) == -1) {
@@ -77,12 +77,15 @@ class Inventory {
             case "Potion":
                 if (!itemIndex)
                     itemIndex = getItemIndex(item, this.potions)
-                return this.potions.splice(item)
+                if(target){
+                    item.useOn(target)
+                }
+                return this.potions.splice(itemIndex, 1)
 
             default:
                 if (!itemIndex)
-                    itemIndex = getItemIndex(item, this.items)
-                return this.items.splice(item)
+                    itemIndex = getItemIndex(itemIndex, this.items)
+                return this.items.splice(item, 1)
         }
     }
 }

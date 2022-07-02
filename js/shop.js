@@ -49,7 +49,17 @@ addShopItems = () => {
             item.className = "ra ra-tesla ra-2x"
 
             bagUpgrade.addEventListener("click", () => {
-                console.log(`buying bag ${i} for ${price} gold`)
+                
+                if (player.inventory.gold >= price) {
+                    player.inventory.gold -= price
+                    player.inventory.slots += i
+                    saveData()
+                    window.location.reload()
+                }
+                else {
+                    console.log(`not enough gold! Inventory Upgrade +${i} requires ${price} gold!`)
+                }
+
             })
             bagUpgrade.appendChild(item)
             shopItemDiv.appendChild(bagUpgrade)
@@ -71,6 +81,21 @@ addShopItems = () => {
 
             potionLootBox.addEventListener("click", () => {
                 console.log(`buying potion ${i} for ${price} gold`)
+                if (player.inventory.slotsLeft > 0) {
+                    if (player.inventory.gold >= price) {
+                        player.inventory.gold -= price
+                        let box = new Item(`Potion Lootbox +${i}`, "potionlootbox", Math.floor(i/2))
+                        player.inventory.addToInventory(box)
+                        saveData()
+                        window.location.reload()
+                    }
+                    else {
+                        console.log(`not enough gold! Potion Lootbox +${i} requires ${price} gold!`)
+                    }
+                }
+                else {
+                    console.log("No space in your inventory left to purchase.")
+                }
             })
 
             potionLootBox.appendChild(item)
@@ -94,6 +119,21 @@ addShopItems = () => {
 
             weaponLootbox.addEventListener("click", () => {
                 console.log(`buying weapon ${i} for ${price} gold`)
+                if (player.inventory.slotsLeft > 0) {
+                    if (player.inventory.gold >= price) {
+                        player.inventory.gold -= price
+                        let box = new Item(`Weapon Lootbox +${i}`, "weaponlootbox", Math.floor(i/2))
+                        player.inventory.addToInventory(box)
+                        saveData()
+                        window.location.reload()
+                    }
+                    else {
+                        console.log(`not enough gold! Weapon Lootbox +${i} requires ${price} gold!`)
+                    }
+                }
+                else {
+                    console.log("No space in your inventory left to purchase.")
+                }
             })
 
             weaponLootbox.appendChild(item)
