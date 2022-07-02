@@ -30,6 +30,7 @@ showCharacterDetails = () => {
     document.getElementById("playerLevel").innerHTML = `Level: ${player.entityLevel}`
     document.getElementById("playerExp").innerHTML = `Exp: ${player.experience}`
     document.getElementById("playerGold").innerHTML = `Gold: ${player.inventory.gold}`
+    document.getElementById("playerSlots").innerHTML = `Inventory: ${player.inventory.itemCount}/${player.inventory.slots} (${player.inventory.slotsLeft} slots left)`
     document.getElementById("playerStrength").innerHTML = `Str: ${player.entityStrength}`
     document.getElementById("playerDexterity").innerHTML = `Dex: ${player.entityDexterity}`
     document.getElementById("playerLuck").innerHTML = `Luk: ${player.entityLuck}`

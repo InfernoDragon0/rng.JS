@@ -24,8 +24,9 @@
     height: 120px;
 }
 
-.playerCard{
+.playerCard {
     position:fixed;
+    top: 0;
 }
 
 .characterDetails {

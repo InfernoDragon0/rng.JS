@@ -30,7 +30,7 @@ saveData = () => {
 }
 
 showCharacterDetails = () => {
-    document.getElementById("playerSlots").innerHTML = `Inventory: ${player.inventory.itemCount}/${player.inventory.slots} (${player.inventory.slotsLeft})`
+    document.getElementById("playerSlots").innerHTML = `Inventory: ${player.inventory.itemCount}/${player.inventory.slots} (${player.inventory.slotsLeft} slots left)`
     document.getElementById("playerGold").innerHTML = `Gold: ${player.inventory.gold}`
 
 }

@@ -67,10 +67,10 @@ class Potion extends Item {
                 target.applyDebuff("stun", stunDuration, 0)
                 break
             case "Acid":
-                var baseDamage = this.size == "Large" ? 11 :
-                    this.size == "Medium" ? 8 :
-                        this.size == "Small" ? 4 :
-                            this.size == "Sample" ? 2 :
+                var baseDamage = this.size == "Large" ? 22 :
+                    this.size == "Medium" ? 16 :
+                        this.size == "Small" ? 8 :
+                            this.size == "Sample" ? 4 :
                                 0
                 target.takeDamage(baseDamage + baseRoll)
                 break

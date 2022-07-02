@@ -167,7 +167,7 @@ document.getElementById("playerCard").addEventListener("click", () => {
         return
     }
 
-    if (selectedPotion != -1) {
+    if (selectedPotion != -1 && player.health > 0) {
         player.inventory.useItem(player.inventory.potions[selectedPotion],selectedPotion, player)
         selectedPotion = -1
         updateUI()
@@ -281,10 +281,10 @@ updateUI = () => {
         }
         else {
             if (key == currentTurn) {
-                document.getElementById(`playerCard`).className = "turnCard card"
+                document.getElementById(`playerCard`).className = "turnCard playerCard card"
             }
             else {
-                document.getElementById(`playerCard`).className = "card"
+                document.getElementById(`playerCard`).className = "playerCard card"
             }
             //rigged stuff
 
@@ -436,7 +436,7 @@ document.getElementById("collect").addEventListener("click", () => {
             lootImage.className = "ra ra-sword ra-2x"
 
             var lootHeader = document.createElement("p")
-            lootHeader.className = "characterHeader, characterDetails"
+            lootHeader.className = "characterHeader characterDetails"
             lootHeader.innerHTML = item.itemNameClean
 
             var lootLeftCard = document.createElement("div")
