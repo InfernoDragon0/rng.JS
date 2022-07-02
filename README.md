@@ -31,12 +31,13 @@ run with ```npm start```
 ### Shop
 - Sells Inventory Slots
 - Sells Weapon Enhancement
+- Sells Weapon Modifier Rerolls
 - Sells Buffs & Weapons Lootbox up till Rare
 
 ### Inventory
 - Holds up to 200 Items
+- Upgrade inventory slots in the shop
 - Sell your items by right clicking to select
-- 
 
 ### Saves & Character Creation
 - Unlimited character creation
@@ -48,4 +49,20 @@ run with ```npm start```
 - Able to Flee from the arena
 - Use Buffs & Debuffs against enemies
 - Randomly Selected up to 5 enemies
+- Regain 5 mana per turn taken by anyone
 
+### Weapons
+- Shocking: Stuns attacked enemy for 1 turn
+- Igniting: Low direct damage, but deals very high damage at the start of enemy turn
+- Balanced: Base weapon damage
+- Focused: 90% of the damage Cannot be evaded
+- Venomous: Applies a long lasting, stackable poison damage over time on the target
+- Double: Deals two damage instances to the target
+
+### Buffs & Debuffs
+- Healing: Heals target for an amount
+- Freezing: Stuns target for a few turns
+- Weakening: Stackable debuff on target, takes additional damage on hit
+- Ignition: Extreme damage on the target's next turn
+- Acid: High instant damage that cannot be evaded
+- Uses 10 mana per cast
