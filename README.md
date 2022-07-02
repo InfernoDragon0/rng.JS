@@ -52,12 +52,12 @@ run with ```npm start```
 - Regain 5 mana per turn taken by anyone
 
 ### Weapons
-- Shocking: Stuns attacked enemy for 1 turn
-- Igniting: Low direct damage, but deals very high damage at the start of enemy turn
+- Shocking: 80% on hit damage, Chance to stun attacked enemy for 1 turn
+- Igniting: 20% on hit damage, but deals an additional 200% damage at the start of enemy turn
 - Balanced: Base weapon damage
-- Focused: 90% of the damage Cannot be evaded
-- Venomous: Applies a long lasting, stackable poison damage over time on the target
-- Double: Deals two damage instances to the target
+- Focused: 100% of the damage Cannot be evaded, additional 10% on hit damage
+- Venomous: 60% on hit damage, Applies a long lasting, stackable 25% poison damage over time on the target
+- Double: Deals two rolled damage instances to the target
 
 ### Buffs & Debuffs
 - Healing: Heals target for an amount
