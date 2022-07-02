@@ -182,10 +182,18 @@ attackButton = (i) => {
     }
 
     if (selectedPotion != -1 && i.health > 0) {
-        player.inventory.useItem(player.inventory.potions[selectedPotion],selectedPotion, i)
-        selectedPotion = -1
-        updateUI()
-        return
+        if (player.mana >=10) {
+            player.inventory.useItem(player.inventory.potions[selectedPotion],selectedPotion, i)
+            player.modifyMana(10)
+            selectedPotion = -1
+            updateUI()
+            return
+        }
+        else {
+            console.log("not enough mana")
+            return
+        }
+        
     }
 
     if (i.health <= 0 || gameEnded) {
@@ -240,11 +248,11 @@ updateUI = () => {
         itemDiv.title = itemz.itemName
         var item = document.createElement("i")
         item.className = "ra ra-2x " + (itemz.potionType == "Healing" ? "ra-health-increase" :
-            itemz.potionType == "Damaging" ? "ra-spinning-sword" :
-                itemz.potionType == "Burning" ? "ra-fire-symbol" :
+            itemz.potionType == "Weakening" ? "ra-spinning-sword" :
+                itemz.potionType == "Ignition" ? "ra-fire-symbol" :
                     itemz.potionType == "Freezing" ? "ra-snowflake" :
                         itemz.potionType == "Acid" ? "ra-biohazard" :
-                            itemz.potionType == "Poison" ? "ra-doubled" : "")
+                        itemz.potionType == "Lifelink" ? "ra-heartburn" : "")
 
         itemDiv.appendChild(item)
         itemDiv.addEventListener("click", () => {
@@ -339,6 +347,7 @@ startTurn = async () => {
     //on each turn,
     updateUI()
     var turnTaker
+    player.modifyMana(-5)
     //find next turn
     let i = maxInitiative
     if (currentTurn == maxInitiative) {

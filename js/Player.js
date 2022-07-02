@@ -36,6 +36,11 @@ class Player extends Entity {
                 break
 
         }
+
+        if (target.isLifeLinked) {
+            this.modifyHealth(-(weaponAttack + potions + stats))
+        }
+
         target.takeDamage(weaponAttack + potions + stats)
     }
 

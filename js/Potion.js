@@ -18,7 +18,7 @@ class Potion extends Item {
     }
 
     static generateRandomItem = (rarity = -1, level = 0) => {
-        var potionTypes = ["Healing", "Damaging", "Burning", "Freezing", "Acid", "Poison"]
+        var potionTypes = ["Healing", "Weakening", "Ignition", "Freezing", "Acid", "Lifelink"]
         var sizes = ["Large", "Medium", "Small", "Sample"]
 
         var potionType = potionTypes[Math.floor(Math.random() * (potionTypes.length))]
@@ -44,16 +44,16 @@ class Potion extends Item {
                                 0
                 target.modifyHealth(baseHeal - baseRoll)
                 break
-            case "Burning":
-                //apply one time damage and burn of burn duration
-                var burnDuration = this.size == "Large" ? 11 :
-                    this.size == "Medium" ? 9 :
-                        this.size == "Small" ? 7 :
-                            this.size == "Sample" ? 5 :
+            case "Ignition":
+                //apply extra heavy damage for x turns
+                var burnDuration = this.size == "Large" ? 3 :
+                    this.size == "Medium" ? 3 :
+                        this.size == "Small" ? 2 :
+                            this.size == "Sample" ? 2 :
                                 0
 
-                target.takeDamage(baseRoll / 4)
-                target.applyDebuff("damage", burnDuration, baseRoll / 10)
+                target.takeDamage(baseRoll*0.2)
+                target.applyDebuff("damage", burnDuration, baseRoll*burnDuration)
                 break
             case "Freezing":
                 //stun for x turns, take one time damage halved from roll
@@ -66,24 +66,24 @@ class Potion extends Item {
                 target.takeDamage(baseRoll / 2)
                 target.applyDebuff("stun", stunDuration, 0)
                 break
-            case "Acid":
-                var baseDamage = this.size == "Large" ? 22 :
-                    this.size == "Medium" ? 16 :
-                        this.size == "Small" ? 8 :
-                            this.size == "Sample" ? 4 :
+            case "Acid": //does bypass evasion, instant damage
+                var baseDamage = this.size == "Large" ? 85 :
+                    this.size == "Medium" ? 40 :
+                        this.size == "Small" ? 25 :
+                            this.size == "Sample" ? 10 :
                                 0
-                target.takeDamage(baseDamage + baseRoll)
+                target.modifyHealth(baseDamage + baseRoll)
                 break
-            case "Poison": //poison applies heavier damage, but no upfront damage, and lesser duration
+            case "Lifelink": //applies lifelink debuff
                 var burnDuration = this.size == "Large" ? 5 :
                     this.size == "Medium" ? 4 :
                         this.size == "Small" ? 3 :
                             this.size == "Sample" ? 2 :
                                 0
 
-                target.applyDebuff("damage", burnDuration, baseRoll / 2)
+                target.applyDebuff("lifelink", burnDuration, baseRoll / 2)
                 break
-            case "Damaging": //Damaging makes target take more damage
+            case "Weakening": //Damaging makes target take more damage
                 var burnDuration = this.size == "Large" ? 5 :
                     this.size == "Medium" ? 4 :
                         this.size == "Small" ? 3 :

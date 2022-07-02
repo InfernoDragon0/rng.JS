@@ -58,6 +58,15 @@ class Entity {
         return false
     }
 
+    get isLifeLinked() {
+        for (let debuff of this.debuffs) {
+            if (debuff["debuff"] == "lifelink") {
+                return true
+            }
+        }
+        return false
+    }
+
     gainExperience = (exp) => {
         let expTable = [0, 100, 200, 300, 400,
             600, 800, 1000, 1200, 1400,
@@ -89,6 +98,18 @@ class Entity {
         }
         else {
             this.health -= modification
+        }
+    }
+
+    modifyMana = (modification) => {
+        if (this.mana - modification < 0) {
+            this.mana = 0
+        }
+        else if (this.mana - modification > this.maxMana) {
+            this.mana = this.maxMana
+        }
+        else {
+            this.mana -= modification
         }
     }
 

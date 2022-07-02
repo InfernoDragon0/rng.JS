@@ -125,11 +125,11 @@ showCharacterDetails = () => {
         potionDiv.title = potion.itemName
         var item = document.createElement("i")
         item.className = "ra ra-2x " + (potion.potionType == "Healing" ? "ra-health-increase" :
-                                        potion.potionType == "Damaging" ? "ra-spinning-sword" :
-                                        potion.potionType == "Burning" ? "ra-fire-symbol" :
+                                        potion.potionType == "Weakening" ? "ra-spinning-sword" :
+                                        potion.potionType == "Ignition" ? "ra-fire-symbol" :
                                         potion.potionType == "Freezing" ? "ra-snowflake" :
                                         potion.potionType == "Acid" ? "ra-biohazard" :
-                                        potion.potionType == "Poison" ? "ra-doubled" : "")
+                                        potion.potionType == "Lifelink" ? "ra-heartburn" : "")
 
         potionDiv.appendChild(item)
         potionDiv.addEventListener("contextmenu", (e) => {
