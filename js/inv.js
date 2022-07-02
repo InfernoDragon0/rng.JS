@@ -69,7 +69,7 @@ showCharacterDetails = () => {
             if (itemz.itemType == "weaponlootbox") {
                 if (player.inventory.items.indexOf(itemz) != -1) {
                     console.log("open box weapon rarity " + itemz.rarity)
-                    let newLoot = Weapon.generateRandomItem(itemz.rarity, itemz.rarity * 2 + 1)
+                    let newLoot = Weapon.generateRandomItem(itemz.rarity, itemz.level)
                     player.inventory.items.splice(player.inventory.items.indexOf(itemz), 1)
                     player.inventory.addToInventory(newLoot)
                     saveData()
@@ -80,7 +80,7 @@ showCharacterDetails = () => {
             else if (itemz.itemType == "potionlootbox") {
                 if (player.inventory.items.indexOf(itemz) != -1) {
                     console.log("open box potion " + itemz.rarity)
-                    let newLoot = Potion.generateRandomItem(itemz.rarity, itemz.rarity * 2 + 1)
+                    let newLoot = Potion.generateRandomItem(itemz.rarity, itemz.level)
                     player.inventory.items.splice(player.inventory.items.indexOf(itemz), 1)
                     player.inventory.addToInventory(newLoot)
                     saveData()

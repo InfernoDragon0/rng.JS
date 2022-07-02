@@ -114,7 +114,7 @@ addShopItems = () => {
                 if (player.inventory.slotsLeft > 0) {
                     if (player.inventory.gold >= price) {
                         player.inventory.gold -= price
-                        let box = new Item(`Potion Lootbox +${i}`, "potionlootbox", Math.floor(i/2))
+                        let box = new Item(`Potion Lootbox +${i}`, "potionlootbox", Math.floor(i/2), i)
                         player.inventory.addToInventory(box)
                         saveData()
                         window.location.reload()
@@ -152,7 +152,7 @@ addShopItems = () => {
                 if (player.inventory.slotsLeft > 0) {
                     if (player.inventory.gold >= price) {
                         player.inventory.gold -= price
-                        let box = new Item(`Weapon Lootbox +${i}`, "weaponlootbox", Math.floor(i/2))
+                        let box = new Item(`Weapon Lootbox +${i}`, "weaponlootbox", Math.floor(i/2), i)
                         player.inventory.addToInventory(box)
                         saveData()
                         window.location.reload()

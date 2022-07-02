@@ -1,8 +1,9 @@
 class Item {
-    constructor(name = "Placeholder", type = "Item", rarity = 0) {
+    constructor(name = "Placeholder", type = "Item", rarity = 0, level = 0) {
         this.name = name
         this.type = type
         this.rarity = rarity
+        this.level = level
 
         this.raritys = ["Common", "Uncommon", "Rare", "Epic", "Mythic"]
     }

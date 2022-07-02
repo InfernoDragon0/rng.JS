@@ -44,10 +44,15 @@ class Enemy extends Entity {
         this.experience = Math.floor(Math.random() * 10 * this.level) + this.level * 5
         if (this.job == "Elite") {
             this.experience *= 10
-            let box = new Item(`Potion Lootbox (Elite)`, "potionlootbox", 3)
-            player.inventory.addToInventory(box)
-            let box2 = new Item(`Weapon Lootbox (Elite)`, "weaponlootbox", 3)
+            let box2 = new Item(`Weapon Lootbox (Elite + ${this.level})`, "weaponlootbox", 3, this.level)
             player.inventory.addToInventory(box2)
+            
+            for (var i = 0; i < 3; i++) { //drop 3 per elite
+                let box = new Item(`Potion Lootbox (Elite +${this.level})`, "potionlootbox", 3, this.level)
+                player.inventory.addToInventory(box)
+            } 
+            
+            
         }
     }
 
