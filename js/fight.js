@@ -75,7 +75,7 @@ loadEnemy = () => {
     var enemyCards = document.getElementById("enemyCards")
     for (var i = 0; i < enemyCount; i++) {
         var newEnemy = new Enemy()
-        newEnemy.level = Math.floor((Math.random() * player.entityLevel) + 1) // more level = more levels
+        newEnemy.level = Math.floor((Math.random() * 3) + player.entityLevel) // more level = more levels
         newEnemy.generateStats()
         var enemyInitiative = Math.floor(Math.random() * (100 - newEnemy.entityDexterity))
 
@@ -294,6 +294,9 @@ updateUI = () => {
     })
 
     if (enemyCount == 0 && !gameEnded) {
+        endGame()
+    }
+    if (player.health <= 0 && !gameEnded) {
         endGame()
     }
 }
@@ -523,7 +526,7 @@ document.getElementById("confirmLoot").addEventListener("click", () => {
     })
 
     player.inventory.gold += Math.floor(gold)
-    player.experience += experience
+    player.gainExperience(experience)
 
     saveData()
     window.location.href = "./gameLobby.html"

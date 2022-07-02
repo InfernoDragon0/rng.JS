@@ -30,17 +30,47 @@ saveData = () => {
 }
 
 showCharacterDetails = () => {
-    document.getElementById("playerSlots").innerHTML = `Slots: ${player.inventory.slotsLeft}/${player.inventory.slots}`
+    document.getElementById("playerSlots").innerHTML = `Inventory: ${player.inventory.itemCount}/${player.inventory.slots} (${player.inventory.slotsLeft})`
     document.getElementById("playerGold").innerHTML = `Gold: ${player.inventory.gold}`
 
 }
 
+addSpecial = (price, rarity, plus, name, itemType, icon) => {
+    var shopItemDiv = document.getElementById("items")
+    var itemDiv = document.createElement("div")
+    itemDiv.className = "item " + (rarity == 1 ? "uncommon" : rarity == 2 ? "rare" : rarity == 3 ? "epic" : rarity == 4 ? "mythic" : "common")
+    itemDiv.title = `${name} +${plus} (${price} gold)`
+    itemDiv.id = `special${plus}`
+    var item = document.createElement("i")
+    item.className = "ra ra-2x " + icon
+
+    itemDiv.addEventListener("click", () => {
+        
+        if (player.inventory.gold >= price) {
+            player.inventory.gold -= price
+            let box = new Item(`${name} +${plus}`, itemType, rarity)
+            player.inventory.addToInventory(box)
+            saveData()
+            window.location.reload()
+        }
+        else {
+            console.log(`not enough gold! ${name} +${plus} requires ${price} gold!`)
+        }
+
+    })
+    itemDiv.appendChild(item)
+    shopItemDiv.appendChild(itemDiv)
+}
+
 addShopItems = () => {
     var shopItemDiv = document.getElementById("items")
+    //special items
+    addSpecial(1100, 4, 1, "Weapon Enhancement", "weaponenhance", "ra-lightning-sword")
+
     //inventory add 1, 3, 5, 7 slots, max slots is 200 slots
     for (let i = 0; i < 8; i++) {
         if (i % 2 == 1) {
-            let price = 5+ i*5
+            let price = 50+ i*150
             var bagUpgrade = document.createElement("div")
             bagUpgrade.className = "item " + (i == 1 ? "uncommon" : i == 3 ? "rare" : i == 5 ? "epic" : i == 7 ? "mythic" : "")
             bagUpgrade.title = `Inventory Upgrade +${i} (${price} gold)`
@@ -71,7 +101,7 @@ addShopItems = () => {
 
     for (let i = 0; i < 6; i++) {
         if (i % 2 == 1) {
-            let price = 3+ i*4
+            let price = 30+ i*40
             var potionLootBox = document.createElement("div")
             potionLootBox.className = "item " + (i == 1 ? "common" : i == 3 ? "uncommon" : i == 5 ? "rare" : "")
             potionLootBox.title = `Potion Lootbox +${i} (${price} gold)`
@@ -109,7 +139,7 @@ addShopItems = () => {
 
     for (let i = 0; i < 6; i++) {
         if (i % 2 == 1) {
-            let price = 15+ i*20
+            let price = 40 + i*80
             var weaponLootbox = document.createElement("div")
             weaponLootbox.className = "item " + (i == 1 ? "common" : i == 3 ? "uncommon" : i == 5 ? "rare" : "")
             weaponLootbox.title = `Weapon Lootbox +${i} (${price} gold)`

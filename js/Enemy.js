@@ -6,7 +6,7 @@ class Enemy extends Entity {
         this.job = job
         this.level = level
 
-        this.equippedWeapon = Weapon.generateRandomItem()
+        this.equippedWeapon = Weapon.generateRandomItem(Item.randomRarity(), this.level)
     }
 
     performAttack = (target) => {
@@ -23,10 +23,10 @@ class Enemy extends Entity {
         this.inventory = new Inventory()
         
         //generate gold
-        this.inventory.gold = Math.floor(Math.random() * 10 * this.level)
+        this.inventory.gold = this.level * 8  + Math.floor(Math.random() * 15 * this.level) + 10
 
         //generate potions, up to 5 per mob
-        var totalPotions = Math.min(Math.floor(Math.random() * 2 * this.level), 5)
+        var totalPotions = Math.min(Math.floor(Math.random() * 2 * this.level), 3)
 
         for (var i = 0; i < totalPotions; i++) {
             var potion = Potion.generateRandomItem()
@@ -41,16 +41,27 @@ class Enemy extends Entity {
         }
 
         //experience as loot
-        this.experience = Math.floor(Math.random() * 20 * this.level)
+        this.experience = Math.floor(Math.random() * 10 * this.level) + this.level * 5
+        if (this.job == "Elite") {
+            this.experience *= 10
+            let box = new Item(`Potion Lootbox (Elite)`, "potionlootbox", 3)
+            player.inventory.addToInventory(box)
+            let box2 = new Item(`Weapon Lootbox (Elite)`, "weaponlootbox", 3)
+            player.inventory.addToInventory(box2)
+        }
     }
 
     generateStats = () => {
         if(this.job == "none"){
             var jobList = ["Phantom", "Warrior", "Mage", "Assassin"]
+            if (this.level >= 10) {
+                jobList.push("Elite")
+            }
             this.job = jobList[Math.floor(Math.random() * jobList.length)]
         }
 
-        var totalStatDistribution = 10
+        var totalStatDistribution = 4 * this.level
+        this.health += 10 * this.level
         this.name = `Level ${this.level} Enemy ${this.job}`
 
         switch (this.job) {
@@ -102,6 +113,12 @@ class Enemy extends Entity {
                 totalStatDistribution -= this.luck
 
                 this.dexterity += totalStatDistribution + 3
+                break
+            case "Elite":
+                this.dexterity = totalStatDistribution
+                this.luck = Math.floor(totalStatDistribution/2)
+                this.strength = totalStatDistribution
+                this.health *= 10
                 break
             default:
                 break

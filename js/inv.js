@@ -45,7 +45,7 @@ saveData = () => {
 }
 
 showCharacterDetails = () => {
-    document.getElementById("playerSlots").innerHTML = `Slots: ${player.inventory.slotsLeft}/${player.inventory.slots}`
+    document.getElementById("playerSlots").innerHTML = `Inventory: ${player.inventory.itemCount}/${player.inventory.slots} (${player.inventory.slotsLeft})`
     document.getElementById("playerItems").innerHTML = `Items: ${player.inventory.items.length}`
 
     var itemsDiv = document.getElementById("items")
@@ -60,7 +60,8 @@ showCharacterDetails = () => {
         itemDiv.title = itemz.itemName
         var item = document.createElement("i")
         item.className = "ra ra-2x " + (itemz.itemType == "weaponlootbox" ? "ra-perspective-dice-random" :
-                                        itemz.itemType == "potionlootbox" ? "ra-crystals" : "")
+                                        itemz.itemType == "potionlootbox" ? "ra-crystals" : 
+                                        itemz.itemType == "weaponenhance" ? "ra-lightning-sword" : "")
 
         itemDiv.appendChild(item)
         itemDiv.addEventListener("click", (e) => {
@@ -86,6 +87,16 @@ showCharacterDetails = () => {
                     window.location.reload()
                 }
             }
+            else if (itemz.itemType == "weaponenhance") {
+                if (player.inventory.items.indexOf(itemz) != -1 && player.equippedWeapon) {
+                    player.inventory.items.splice(player.inventory.items.indexOf(itemz), 1)
+                    console.log("enhance weapon " + itemz.rarity)
+                    player.equippedWeapon.attackMin += 10
+                    player.equippedWeapon.attackMax += 10
+                    saveData()
+                    window.location.reload()
+                }
+            }
         })
         itemsDiv.appendChild(itemDiv)
     })
@@ -103,7 +114,6 @@ showCharacterDetails = () => {
         potionDiv.id = `potion${index}`
         potionDiv.title = potion.itemName
         var item = document.createElement("i")
-        console.log(potion.potionType)
         item.className = "ra ra-2x " + (potion.potionType == "Healing" ? "ra-health-increase" :
                                         potion.potionType == "Damaging" ? "ra-spinning-sword" :
                                         potion.potionType == "Burning" ? "ra-fire-symbol" :

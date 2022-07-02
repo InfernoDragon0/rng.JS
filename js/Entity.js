@@ -13,6 +13,7 @@ class Entity {
         this.experience = 0
         this.statPoints = 0
         this.debuffs = []
+        this.weaken = 0
 
         this.equippedWeapon = null
         this.inventory = inventory ? inventory : new Inventory()
@@ -39,7 +40,7 @@ class Entity {
     get entityWeapon() { return this.equippedWeapon }
     set entityWeapon(weapon) { this.equippedWeapon = weapon }
 
-    get isStunned() { 
+    get isStunned() {
         for (let debuff of this.debuffs) {
             if (debuff["debuff"] == "stun") {
                 return true
@@ -48,7 +49,38 @@ class Entity {
         return false
     }
 
-    modifyHealth(modification) {
+    get isWeakened() {
+        for (let debuff of this.debuffs) {
+            if (debuff["debuff"] == "weaken") {
+                return true
+            }
+        }
+        return false
+    }
+
+    gainExperience = (exp) => {
+        let expTable = [0, 100, 200, 300, 400,
+            600, 800, 1000, 1200, 1400,
+            1800, 2200, 2600, 3000, 3400,
+            4200, 5000, 5800, 6600, 7400, 99999]
+
+        if (this.level == 20) {
+            return
+        }
+
+        if (this.experience + exp >= expTable[this.level]) {
+            let overflow = (this.experience + exp) - expTable[this.level]
+            this.experience = overflow
+            this.level += 1
+            this.statPoints += 2
+            this.maxHealth += 10 + Math.floor(this.strength/2)
+        }
+        else {
+            this.experience += exp
+        }
+    }
+
+    modifyHealth = (modification) => {
         if (this.health - modification < 0) {
             this.health = 0
         }
@@ -67,7 +99,10 @@ class Entity {
             console.log("Damage Evaded")
         }
         else {
-            this.modifyHealth(damage)
+            console.log("original dmg " + damage)
+            console.log("weaken " + this.weaken)
+            console.log("dealing " + (damage * (100 + this.weaken) / 100))
+            this.modifyHealth(damage * (100 + this.weaken) / 100)
 
             if (this.health <= 0) {
                 console.log(`${this.name} has Died`)
@@ -80,7 +115,10 @@ class Entity {
 
         }
         else { //if duration is -1, forever, same debuffs are stackable
-            this.debuffs.push({"duration": duration, "power": power, "debuff": debuff})
+            this.debuffs.push({ "duration": duration, "power": power, "debuff": debuff })
+            if (debuff == "weaken") {
+                this.weaken += power
+            }
         }
     }
 
@@ -97,7 +135,7 @@ class Entity {
                 }
                 if (debuff.duration > 0)
                     debuff.duration--
-                
+
                 if (debuff.duration == 0) {
                     clearables.push(debuff)
                 }
@@ -105,11 +143,12 @@ class Entity {
         })
         for (let clearable of clearables) {
             if (this.debuffs.indexOf(clearable) != -1) {
+                if (clearable["debuff"] == "weaken") this.weaken -= clearable["power"]
                 this.debuffs.splice(this.debuffs.indexOf(clearable), 1)
                 console.log(this.name + " removed " + clearable.debuff + " debuff")
             }
         }
-        
-        
+
+
     }
 }
